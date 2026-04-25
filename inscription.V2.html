@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inscription — Le Monde à la Loupe 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;700&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#1a1a2e; --paper:#fdf8f0; --warm:#f5efe3;
+  --bamboo:#5c7a4a; --moss:#3d5e2e;
+  --blossom:#d4607a; --petal:#f0b8c6;
+  --sky:#7ba7bc; --gold:#c9894a;
+  --mist:#dde8dd; --shadow:rgba(26,26,46,0.10);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--paper);color:var(--ink);font-family:'Nunito',sans-serif;font-weight:400;min-height:100vh;overflow-x:hidden;position:relative;}
+@keyframes petal-fall{0%{transform:translateY(-40px) translateX(0) rotate(0deg);opacity:0}10%{opacity:.7}80%{opacity:.4}100%{transform:translateY(102vh) translateX(60px) rotate(420deg);opacity:0}}
+.petal{position:fixed;z-index:0;pointer-events:none;animation:petal-fall linear infinite;}
+.p1{left:8%;width:12px;height:16px;animation-duration:9s;animation-delay:0s;}
+.p2{left:22%;width:9px;height:12px;animation-duration:13s;animation-delay:2s;}
+.p3{left:45%;width:14px;height:18px;animation-duration:11s;animation-delay:5s;}
+.p4{left:67%;width:10px;height:13px;animation-duration:15s;animation-delay:1s;}
+.p5{left:82%;width:11px;height:15px;animation-duration:10s;animation-delay:7s;}
+.p6{left:55%;width:8px;height:11px;animation-duration:14s;animation-delay:3.5s;}
+.bg-art{position:fixed;pointer-events:none;z-index:0;}
+.bg-left{left:-60px;top:10vh;width:220px;opacity:.13;}
+.bg-right{right:-40px;top:35vh;width:180px;opacity:.11;}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.container{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:40px 20px 80px;}
+.topbar{display:flex;justify-content:center;margin-bottom:32px;animation:fadeDown .7s ease both;}
+.header{text-align:center;margin-bottom:48px;animation:fadeDown .9s ease .1s both;}
+.header h1{font-family:'Zen Old Mincho',serif;font-size:clamp(2rem,7vw,3.4rem);font-weight:400;line-height:1.15;letter-spacing:.02em;color:var(--ink);margin-bottom:6px;}
+.accent{color:var(--blossom);}
+.tagline{font-family:'Zen Old Mincho',serif;font-size:14px;letter-spacing:4px;color:var(--bamboo);text-transform:uppercase;margin-bottom:18px;}
+.header-desc{font-size:14.5px;line-height:1.85;color:#4a4a5a;max-width:520px;margin:0 auto 22px;}
+.deadline-pill{display:inline-flex;align-items:center;gap:8px;padding:11px 26px;background:var(--ink);color:var(--paper);border-radius:100px;font-size:14px;font-weight:700;letter-spacing:.5px;box-shadow:0 4px 16px rgba(26,26,46,.18);}
+.dl-highlight{color:var(--petal);}
+.branch-div{display:flex;align-items:center;gap:12px;margin:36px 0 28px;}
+.branch-div::before,.branch-div::after{content:'';flex:1;height:1px;background:linear-gradient(to right,transparent,var(--mist),transparent);}
+.branch-div-icon{font-size:1.3rem;flex-shrink:0;}
+.section-hd{display:flex;align-items:center;gap:14px;margin-bottom:20px;animation:fadeUp .6s ease both;}
+.sec-badge{width:38px;height:38px;border-radius:50%;border:2.5px solid var(--bamboo);background:rgba(92,122,74,.08);display:flex;align-items:center;justify-content:center;font-family:'Nunito',sans-serif;font-size:16px;font-weight:700;color:var(--bamboo);flex-shrink:0;}
+.sec-title{font-family:'Zen Old Mincho',serif;font-size:1.35rem;font-weight:400;color:var(--ink);letter-spacing:.04em;}
+.card{background:rgba(255,255,255,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.85);border-radius:22px;padding:30px 28px;box-shadow:0 4px 28px var(--shadow);display:flex;flex-direction:column;gap:22px;animation:fadeUp .7s ease both;}
+.field{display:flex;flex-direction:column;gap:7px;}
+.field label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--bamboo);}
+.req{color:var(--blossom);}
+.opt{font-weight:400;text-transform:none;letter-spacing:0;font-size:11px;color:#aaa;margin-left:5px;}
+.field input,.field select{width:100%;padding:13px 16px;background:rgba(253,248,240,.85);border:1.5px solid var(--mist);border-radius:13px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:400;color:var(--ink);outline:none;transition:border-color .22s,box-shadow .22s,background .22s;-webkit-appearance:none;}
+.field input:focus,.field select:focus{border-color:var(--bamboo);background:#fff;box-shadow:0 0 0 4px rgba(92,122,74,.12);}
+.field input.err{border-color:var(--blossom)!important;}
+.field-hint{font-size:12px;color:#888;line-height:1.55;}
+.err-msg{font-size:12px;color:var(--blossom);display:none;margin-top:2px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.inner-sep{display:flex;align-items:center;gap:10px;color:#ddd;font-size:10px;letter-spacing:3px;text-transform:uppercase;}
+.inner-sep::before,.inner-sep::after{content:'';flex:1;height:1px;background:var(--mist);}
+.opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.opt-card{position:relative;cursor:pointer;}
+.opt-card input[type=radio]{position:absolute;opacity:0;width:0;height:0;}
+.opt-lbl{display:flex;align-items:center;gap:10px;padding:13px 15px;background:rgba(253,248,240,.85);border:1.5px solid var(--mist);border-radius:13px;font-size:13.5px;font-weight:600;color:var(--ink);line-height:1.35;cursor:pointer;transition:all .2s;}
+.opt-dot{width:17px;height:17px;border:1.5px solid #ccc;border-radius:50%;flex-shrink:0;transition:all .2s;display:flex;align-items:center;justify-content:center;}
+.opt-card input:checked + .opt-lbl{background:rgba(92,122,74,.11);border-color:var(--bamboo);color:var(--moss);}
+.opt-card input:checked + .opt-lbl .opt-dot{background:var(--bamboo);border-color:var(--bamboo);box-shadow:inset 0 0 0 3px #fff;}
+.opt-lbl:hover{border-color:var(--bamboo);background:rgba(92,122,74,.07);}
+.submit-area{text-align:center;margin-top:44px;animation:fadeUp .8s ease .4s both;}
+.btn-send{position:relative;display:inline-flex;align-items:center;gap:10px;padding:17px 50px;background:linear-gradient(135deg,var(--bamboo),var(--moss));color:var(--paper);border:none;border-radius:100px;font-family:'Nunito',sans-serif;font-size:15.5px;font-weight:700;letter-spacing:.4px;cursor:pointer;overflow:hidden;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 20px rgba(61,94,46,.25);}
+.btn-send::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--moss),var(--bamboo));opacity:0;transition:opacity .3s;}
+.btn-send:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(26,26,46,.22);}
+.btn-send:hover::after{opacity:1;}
+.btn-send span{position:relative;z-index:1;}
+.btn-send:disabled{opacity:.6;cursor:default;transform:none;}
+.send-note{margin-top:12px;font-size:12px;color:#aaa;}
+.form-wrap.hide{display:none;}
+.success-screen{display:none;text-align:center;padding:48px 10px;animation:fadeUp .6s ease both;}
+.success-screen.show{display:block;}
+.success-icon{font-size:3.5rem;margin-bottom:16px;}
+.success-screen h2{font-family:'Zen Old Mincho',serif;font-size:2rem;font-weight:400;color:var(--ink);margin-bottom:14px;line-height:1.3;}
+.success-screen .sub{font-size:14.5px;color:#4a4a5a;line-height:1.85;max-width:480px;margin:0 auto;}
+.success-screen em{color:var(--bamboo);font-style:normal;font-weight:700;}
+.guide-cta{margin-top:8px;background:rgba(255,255,255,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.85);border-radius:22px;padding:30px 28px;box-shadow:0 4px 28px var(--shadow);text-align:center;}
+.guide-cta-emoji{font-size:2.6rem;margin-bottom:12px;}
+.guide-cta h3{font-family:'Zen Old Mincho',serif;font-size:1.4rem;font-weight:400;color:var(--ink);margin-bottom:10px;letter-spacing:.02em;}
+.guide-cta p{font-size:14px;color:#4a4a5a;line-height:1.8;margin-bottom:22px;max-width:420px;margin-left:auto;margin-right:auto;}
+.btn-guide{display:inline-flex;align-items:center;gap:9px;padding:14px 38px;background:rgba(253,248,240,.9);border:2px solid var(--bamboo);border-radius:100px;font-family:'Nunito',sans-serif;font-size:14.5px;font-weight:700;color:var(--bamboo);text-decoration:none;transition:all .22s;}
+.btn-guide:hover{background:var(--bamboo);color:var(--paper);transform:translateY(-2px);box-shadow:0 6px 22px rgba(92,122,74,.28);}
+/* ── ADMIN ── */
+.btn-admin{background:transparent;border:1.5px solid var(--mist);color:#888;border-radius:100px;padding:9px 24px;font-size:12px;font-family:'Nunito',sans-serif;cursor:pointer;transition:all .2s;font-weight:600;}
+.btn-admin:hover{border-color:var(--bamboo);color:var(--bamboo);}
+.btn-export{background:var(--bamboo);color:#fff;border:none;border-radius:10px;padding:10px 20px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;}
+.btn-export:hover{background:var(--moss);}
+.btn-clear{background:transparent;color:var(--blossom);border:1.5px solid var(--petal);border-radius:10px;padding:9px 20px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;}
+.btn-clear:hover{background:rgba(212,96,122,.08);}
+.footer-area{text-align:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--mist);}
+.footer-area p{font-size:12px;color:#ccc;letter-spacing:.06em;}
+@media(max-width:480px){.row2{grid-template-columns:1fr;}.opt-grid{grid-template-columns:1fr;}}
+/* ── THEME EXPLORER ── */
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes kigo-pop{0%{transform:scale(.7);opacity:0}60%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+.theme-explorer{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.theme-card-sel{position:relative;cursor:pointer;border-radius:18px;border:2px solid var(--mist);background:rgba(253,248,240,.85);padding:16px 14px;transition:all .25s;overflow:hidden;}
+.theme-card-sel:hover{border-color:var(--bamboo);transform:translateY(-2px);box-shadow:0 6px 20px var(--shadow);}
+.theme-card-sel.selected{border-color:var(--bamboo);background:rgba(92,122,74,.09);box-shadow:0 6px 24px rgba(92,122,74,.15);}
+.theme-card-sel.selected.blossom-theme{border-color:var(--blossom);background:rgba(212,96,122,.07);box-shadow:0 6px 24px rgba(212,96,122,.12);}
+.theme-card-sel input[type=radio]{position:absolute;opacity:0;width:0;height:0;}
+.tc-emoji{font-size:1.8rem;margin-bottom:8px;display:block;transition:transform .2s;}
+.theme-card-sel:hover .tc-emoji{transform:scale(1.15);}
+.tc-title{font-family:'Zen Old Mincho',serif;font-size:14px;color:var(--ink);line-height:1.4;margin-bottom:3px;}
+.tc-tagline{font-size:11px;color:#999;line-height:1.4;}
+.tc-check{position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:50%;background:var(--bamboo);display:none;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:700;}
+.theme-card-sel.selected .tc-check{display:flex;}
+.theme-card-sel.selected.blossom-theme .tc-check{background:var(--blossom);}
+.theme-preview{display:none;border-radius:18px;overflow:hidden;animation:fadeIn .35s ease both;margin-bottom:4px;}
+.theme-preview.show{display:block;}
+.tp-hero{padding:20px 22px 16px;}
+.tp-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.5;margin-bottom:10px;font-family:'Nunito',sans-serif;}
+.tp-haiku{font-family:'Zen Old Mincho',serif;font-size:17px;line-height:2.1;letter-spacing:.03em;}
+.tp-haiku span{display:block;}
+.tp-kigo-wrap{margin-top:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.tp-kigo-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;font-family:'Nunito',sans-serif;opacity:.6;}
+.kigo-tag{display:inline-block;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:700;font-family:'Nunito',sans-serif;animation:kigo-pop .3s ease both;}
+.tp-body{padding:14px 22px 18px;}
+.tp-what-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;font-family:'Nunito',sans-serif;opacity:.5;}
+.tp-ideas{display:flex;flex-wrap:wrap;gap:7px;}
+.idea-pill{font-size:12px;font-family:'Nunito',sans-serif;padding:5px 13px;border-radius:100px;font-weight:600;animation:kigo-pop .25s ease both;}
+</style>
+</head>
+<body>
+
+<svg class="petal p1" viewBox="0 0 12 16"><ellipse cx="6" cy="8" rx="5" ry="7" fill="#d4607a" opacity=".7"/></svg>
+<svg class="petal p2" viewBox="0 0 9 12"><ellipse cx="4.5" cy="6" rx="4" ry="5.5" fill="#f0b8c6" opacity=".6"/></svg>
+<svg class="petal p3" viewBox="0 0 14 18"><ellipse cx="7" cy="9" rx="6" ry="8" fill="#d4607a" opacity=".5"/></svg>
+<svg class="petal p4" viewBox="0 0 10 13"><ellipse cx="5" cy="6.5" rx="4.5" ry="6" fill="#f0b8c6" opacity=".65"/></svg>
+<svg class="petal p5" viewBox="0 0 11 15"><ellipse cx="5.5" cy="7.5" rx="5" ry="7" fill="#d4607a" opacity=".55"/></svg>
+<svg class="petal p6" viewBox="0 0 8 11"><ellipse cx="4" cy="5.5" rx="3.5" ry="5" fill="#f0b8c6" opacity=".5"/></svg>
+
+<svg class="bg-art bg-left" viewBox="0 0 200 400" fill="none">
+  <line x1="100" y1="0" x2="100" y2="400" stroke="#5c7a4a" stroke-width="1.5"/>
+  <ellipse cx="100" cy="70" rx="18" ry="28" fill="#d4607a" opacity=".4"/>
+  <ellipse cx="80" cy="120" rx="14" ry="22" fill="#f0b8c6" opacity=".5"/>
+  <ellipse cx="118" cy="165" rx="16" ry="25" fill="#d4607a" opacity=".35"/>
+  <ellipse cx="88" cy="215" rx="12" ry="20" fill="#f0b8c6" opacity=".45"/>
+  <line x1="100" y1="70" x2="80" y2="120" stroke="#5c7a4a" stroke-width="1"/>
+  <line x1="100" y1="120" x2="118" y2="165" stroke="#5c7a4a" stroke-width="1"/>
+  <line x1="100" y1="165" x2="88" y2="215" stroke="#5c7a4a" stroke-width="1"/>
+</svg>
+<svg class="bg-art bg-right" viewBox="0 0 180 300" fill="none">
+  <line x1="90" y1="0" x2="90" y2="300" stroke="#5c7a4a" stroke-width="1.2"/>
+  <ellipse cx="90" cy="55" rx="14" ry="22" fill="#c9894a" opacity=".3"/>
+  <ellipse cx="110" cy="105" rx="12" ry="18" fill="#d4607a" opacity=".3"/>
+  <ellipse cx="72" cy="150" rx="13" ry="20" fill="#f0b8c6" opacity=".35"/>
+</svg>
+
+<div class="container">
+
+  <div class="topbar">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+        <circle cx="32" cy="32" r="30" stroke="#d4607a" stroke-width="1.5" opacity=".4"/>
+        <circle cx="32" cy="32" r="22" stroke="#d4607a" stroke-width="1" opacity=".25"/>
+        <circle cx="32" cy="32" r="12" stroke="#d4607a" stroke-width=".8" opacity=".2"/>
+        <text x="32" y="40" text-anchor="middle" font-size="20" fill="#d4607a" opacity=".75">&#128269;</text>
+      </svg>
+      <p style="font-family:'Zen Old Mincho',serif;font-size:12px;letter-spacing:3px;color:var(--bamboo);text-transform:uppercase;">Skoolup · 2026</p>
+    </div>
+  </div>
+
+  <div class="header">
+    <p class="tagline">Concours de poésie</p>
+    <h1>Le monde à la <span class="accent">Loupe</span></h1>
+    <p class="header-desc">
+      Rejoins le concours de haïku et capture l'infiniment petit en trois lignes.<br>
+      Remplis ce formulaire pour réserver ta place — c'est rapide et gratuit !
+    </p>
+    <span class="deadline-pill">&#9203; Fermeture des portes le <span class="dl-highlight">&nbsp;22 mai</span></span>
+  </div>
+
+  <!-- FORMULAIRE -->
+  <div class="form-wrap" id="formWrap">
+
+    <div class="section-hd"><div class="sec-badge">1</div><h2 class="sec-title">&#128100; Qui es-tu ?</h2></div>
+    <div class="card">
+      <div class="row2">
+        <div class="field">
+          <label>Prénom <span class="req">*</span></label>
+          <input id="f-prenom" type="text" placeholder="Yasmine">
+          <div class="err-msg" id="e-prenom">Prénom requis</div>
+        </div>
+        <div class="field">
+          <label>Nom <span class="req">*</span></label>
+          <input id="f-nom" type="text" placeholder="Benali">
+          <div class="err-msg" id="e-nom">Nom requis</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Adresse email <span class="req">*</span></label>
+        <input id="f-email" type="email" placeholder="yasmine@exemple.com">
+        <p class="field-hint">Tu recevras ta confirmation d'inscription sur cette adresse.</p>
+        <div class="err-msg" id="e-email">Adresse email invalide</div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>Âge <span class="req">*</span></label>
+          <input id="f-age" type="number" min="8" max="99" placeholder="16">
+          <div class="err-msg" id="e-age">Âge invalide (8–99)</div>
+        </div>
+        <div class="field">
+          <label>Pays <span class="req">*</span></label>
+          <input id="f-pays" type="text" placeholder="Algérie">
+          <div class="err-msg" id="e-pays">Pays requis</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Établissement <span class="opt">(optionnel)</span></label>
+        <input id="f-ecole" type="text" placeholder="École, collège, lycée, université…">
+      </div>
+    </div>
+
+    <div class="branch-div"><span class="branch-div-icon">&#127800;</span></div>
+
+    <div class="section-hd" style="animation-delay:.15s"><div class="sec-badge">2</div><h2 class="sec-title">&#127912; Ton thème</h2></div>
+    <div class="card" style="animation-delay:.2s">
+
+      <div style="background:rgba(92,122,74,.06);border-left:3px solid var(--bamboo);border-radius:0 12px 12px 0;padding:14px 18px;">
+        <p style="font-family:'Zen Old Mincho',serif;font-size:15px;color:var(--ink);line-height:1.8;margin-bottom:6px;">Ton défi : capturer l'infiniment petit.</p>
+        <p style="font-size:13px;color:#4a4a5a;line-height:1.7;">Choisis un angle de vue, observe autour de toi, et glisse un <strong style="color:var(--bamboo);">kigo</strong> — un mot qui révèle la saison sans la nommer. Puis traduis ce moment en <strong>3 lignes</strong> et en <strong>une création</strong> (photo, son, objet, dessin…)</p>
+      </div>
+
+      <div style="background:rgba(201,137,74,.07);border:1.5px solid rgba(201,137,74,.2);border-radius:14px;padding:14px 18px;display:flex;gap:12px;align-items:flex-start;">
+        <span style="font-size:1.4rem;flex-shrink:0;">&#129296;</span>
+        <div>
+          <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin-bottom:5px;font-family:'Nunito',sans-serif;">L'ingrédient secret : le kigo</p>
+          <p style="font-size:13px;color:#4a4a5a;line-height:1.65;">Un mot qui <em>suggère</em> la saison sans la dire. Pas « c'est l'hiver » — mais <strong style="color:var(--ink);">écharpe, buée, radiateur</strong>. Pas « c'est le printemps » — mais <strong style="color:var(--ink);">bourgeon, hirondelle, averse</strong>.</p>
+        </div>
+      </div>
+
+      <div class="inner-sep">&#10022; Clique sur un thème pour l'explorer &#10022;</div>
+
+      <div class="field">
+        <label>Choisis ton thème <span class="req">*</span></label>
+        <div class="theme-explorer" id="themeExplorer">
+          <div class="theme-card-sel" id="tc-loupe" onclick="selectTheme('loupe')">
+            <input type="radio" name="theme" value="loupe" id="r-loupe">
+            <span class="tc-emoji">&#128302;</span>
+            <div class="tc-title">Plonger dans le petit</div>
+            <div class="tc-tagline">Zoom sur l'invisible</div>
+            <span class="tc-check">&#10003;</span>
+          </div>
+
+          <div class="theme-card-sel blossom-theme" id="tc-choses" onclick="selectTheme('choses')">
+            <input type="radio" name="theme" value="choses" id="r-choses">
+            <span class="tc-emoji">&#9999;&#65039;</span>
+            <div class="tc-title">La vie secrète des choses</div>
+            <div class="tc-tagline">Les objets ont leur âme</div>
+            <span class="tc-check">&#10003;</span>
+          </div>
+          <div class="theme-card-sel" id="tc-royaumes" onclick="selectTheme('royaumes')">
+            <input type="radio" name="theme" value="royaumes" id="r-royaumes">
+            <span class="tc-emoji">&#128167;</span>
+            <div class="tc-title">Les royaumes cachés</div>
+            <div class="tc-tagline">L'immense dans le minuscule</div>
+            <span class="tc-check">&#10003;</span>
+          </div>
+          <div class="theme-card-sel blossom-theme" id="tc-sol" onclick="selectTheme('sol')">
+            <input type="radio" name="theme" value="sol" id="r-sol">
+            <span class="tc-emoji">&#128095;&#65039;</span>
+            <div class="tc-title">Au ras du sol</div>
+            <div class="tc-tagline">À hauteur de fourmi</div>
+            <span class="tc-check">&#10003;</span>
+          </div>
+        </div>
+        <div class="theme-preview" id="themePreview"></div>
+        <div class="err-msg" id="e-theme" style="display:none;">Choisis un thème pour continuer</div>
+      </div>
+
+      <div class="inner-sep">&#10022;</div>
+
+      <div class="field">
+        <label>Niveau <span class="req">*</span></label>
+        <div style="display:flex;flex-direction:column;gap:9px;">
+          <label class="opt-card"><input type="radio" name="niveau" value="debutant"><span class="opt-lbl"><span class="opt-dot"></span>&#127807; Débutant — je découvre le haïku</span></label>
+          <label class="opt-card"><input type="radio" name="niveau" value="intermediaire"><span class="opt-lbl"><span class="opt-dot"></span>&#127807; Intermédiaire — j'en ai déjà écrit</span></label>
+          <label class="opt-card"><input type="radio" name="niveau" value="confirme"><span class="opt-lbl"><span class="opt-dot"></span>&#127807; Confirmé — je pratique régulièrement</span></label>
+        </div>
+        <div class="err-msg" id="e-niveau" style="display:none;">Choisis ton niveau</div>
+      </div>
+    </div>
+
+    <div class="branch-div"><span class="branch-div-icon">&#127807;</span></div>
+
+    <div class="section-hd" style="animation-delay:.3s"><div class="sec-badge">3</div><h2 class="sec-title">&#127917; Format envisagé</h2></div>
+    <div class="card" style="animation-delay:.35s">
+      <div class="field">
+        <label>Comment comptes-tu rendre ton oeuvre ? <span class="opt">(optionnel)</span></label>
+        <div class="opt-grid">
+          <label class="opt-card"><input type="radio" name="format" value="illustration"><span class="opt-lbl"><span class="opt-dot"></span>&#127912; Illustration</span></label>
+          <label class="opt-card"><input type="radio" name="format" value="photo"><span class="opt-lbl"><span class="opt-dot"></span>&#128247; Photo</span></label>
+          <label class="opt-card"><input type="radio" name="format" value="video"><span class="opt-lbl"><span class="opt-dot"></span>&#127909; Vidéo courte</span></label>
+          <label class="opt-card"><input type="radio" name="format" value="audio"><span class="opt-lbl"><span class="opt-dot"></span>&#127925; Audio</span></label>
+          <label class="opt-card"><input type="radio" name="format" value="physique"><span class="opt-lbl"><span class="opt-dot"></span>&#127912; Oeuvre physique</span></label>
+          <label class="opt-card"><input type="radio" name="format" value="indecis"><span class="opt-lbl"><span class="opt-dot"></span>&#129300; Pas encore décidé</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="submit-area">
+  <button type="button" class="btn-send" id="btnSend" onclick="submitForm()">
+    <span>&#127807;</span>
+    <span>Valider mon inscription</span>
+  </button>
+  <p class="send-note">Inscription gratuite · Données protégées</p>
+</div>
+
+  <!-- SUCCÈS -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">&#127881;</div>
+    <h2>Ton inscription est<br><span class="accent">confirmée !</span></h2>
+    <p class="sub">
+      Merci <em id="successPrenom"></em> ! Tu es bien inscrit·e au concours
+      <em>Le Monde à la Loupe</em>. Un email t'a été envoyé à <em id="successEmail"></em>.
+    </p>
+
+    <div class="branch-div"><span class="branch-div-icon">&#127800;</span></div>
+
+    <div class="guide-cta">
+      <div class="guide-cta-emoji">&#128214;</div>
+      <h3>Prêt·e à t'entraîner ?</h3>
+      <p>
+        Consulte le <strong>guide du parfait haïjin</strong> avant de soumettre ton oeuvre —<br>
+        théorie, exercices par thème, atelier d'écriture et quiz t'y attendent !
+      </p>
+      <a href="guide.html" class="btn-guide">
+        <span>&#127807;</span>
+        <span>Accéder au guide</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-area">
+    <p>&#10022; Le Monde à la Loupe · Concours de Haïku · Skoolup · 2026</p>
+  </div>
+
+  
+
+</div><!-- /container -->
+
+<script>
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyA6kn1hSZEvuI6pYcQGV3JGrD_kydgrMSfk8b4ybnLXPNEBvxU-hRlUiUjo572GuBvvA/exec";
+const DB_KEY = "loupe_inscriptions_2026";
+const THEMES  = { loupe:"Le monde à la loupe", choses:"La vie secrète des choses", royaumes:"Les royaumes cachés", sol:"Au ras du sol" };
+const NIVEAUX = { debutant:"Débutant", intermediaire:"Intermédiaire", confirme:"Confirmé" };
+const FORMATS = { illustration:"Illustration", photo:"Photo", video:"Vidéo", audio:"Audio", physique:"Oeuvre physique", indecis:"Pas encore décidé" };
+
+function getDB(){ try{ return JSON.parse(localStorage.getItem(DB_KEY))||[]; } catch(e){ return []; } }
+function saveDB(data){ localStorage.setItem(DB_KEY, JSON.stringify(data)); }
+function v(id){ return (document.getElementById(id)?.value||'').trim(); }
+function radio(name){ return document.querySelector('input[name="'+name+'"]:checked')?.value||''; }
+function showErr(eid,fid){ document.getElementById(eid).style.display='block'; if(fid) document.getElementById(fid)?.classList.add('err'); }
+function hideErr(eid,fid){ document.getElementById(eid).style.display='none'; if(fid) document.getElementById(fid)?.classList.remove('err'); }
+
+function validate(){
+  let ok=true;
+  if(!v('f-prenom')){ showErr('e-prenom','f-prenom'); ok=false; } else hideErr('e-prenom','f-prenom');
+  if(!v('f-nom'))   { showErr('e-nom','f-nom');       ok=false; } else hideErr('e-nom','f-nom');
+  if(!v('f-email')||!/\S+@\S+\.\S+/.test(v('f-email'))){ showErr('e-email','f-email'); ok=false; } else hideErr('e-email','f-email');
+  const age=Number(v('f-age'));
+  if(!v('f-age')||isNaN(age)||age<8||age>99){ showErr('e-age','f-age'); ok=false; } else hideErr('e-age','f-age');
+  if(!v('f-pays')){ showErr('e-pays','f-pays'); ok=false; } else hideErr('e-pays','f-pays');
+  if(!radio('theme')){ document.getElementById('e-theme').style.display='block'; ok=false; } else document.getElementById('e-theme').style.display='none';
+  if(!radio('niveau')){ document.getElementById('e-niveau').style.display='block'; ok=false; } else document.getElementById('e-niveau').style.display='none';
+  return ok;
+}
+
+const CONFIRMATION_URL = "https://adorable-sable-c87e77.netlify.app/";
+
+async function submitForm(){
+  if(!validate()){
+    // Scroll vers la première erreur
+    const firstErr = document.querySelector('.err-msg[style*="block"], input.err');
+    if(firstErr) firstErr.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  
+  const btn = document.getElementById('btnSend');
+  btn.disabled = true;
+  btn.innerHTML = '<span>&#9203;</span><span>Envoi en cours…</span>';
+  
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'})
+                + ' ' + now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  
+  const entry = {
+    id:     Date.now(),
+    date:   dateStr,
+    prenom: v('f-prenom'),
+    nom:    v('f-nom'),
+    email:  v('f-email'),
+    age:    v('f-age'),
+    pays:   v('f-pays'),
+    ecole:  v('f-ecole'),
+    theme:  radio('theme'),
+    niveau: radio('niveau'),
+    format: radio('format')
+  };
+  
+  // Sauvegarde locale (panneau admin)
+  const db = getDB();
+  db.push(entry);
+  saveDB(db);
+  
+  // Envoi Google Sheets si configuré
+  if(APPS_SCRIPT_URL !== "COLLER_VOTRE_URL_ICI"){
+    try{
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors', 
+        body: JSON.stringify({type:'inscription', ...entry})
+      });
+    }catch(e){ console.warn('Apps Script error:', e); }
+  }
+  
+  // 🎯 Redirection vers la page de confirmation AVEC les données
+  const params = new URLSearchParams({
+    prenom: entry.prenom,
+    nom:    entry.nom,
+    email:  entry.email,
+    age:    entry.age,
+    pays:   entry.pays,
+    ecole:  entry.ecole,
+    theme:  entry.theme,
+    niveau: entry.niveau,
+    format: entry.format
+  });
+  
+  window.location.href = CONFIRMATION_URL + '?' + params.toString();
+}
+
+function toggleAdmin(){ const p=document.getElementById('adminPanel'); p.classList.toggle('open'); if(p.classList.contains('open')) renderAdmin(); }
+
+function renderAdmin(){
+  const db=getDB();
+  document.getElementById('countBadge').textContent=db.length;
+  const empty=document.getElementById('adminEmpty');
+  const wrap=document.getElementById('adminTableWrap');
+  const tbody=document.getElementById('adminTbody');
+  if(db.length===0){ empty.style.display='block'; wrap.style.display='none'; return; }
+  empty.style.display='none'; wrap.style.display='block';
+  tbody.innerHTML=db.map((e,i)=>'<tr><td><strong>'+(i+1)+'</strong></td><td style="white-space:nowrap">'+e.date+'</td><td>'+e.prenom+'</td><td>'+e.nom+'</td><td style="color:var(--sky)">'+e.email+'</td><td>'+e.age+'</td><td>'+e.pays+'</td><td>'+(e.ecole||'—')+'</td><td>'+(THEMES[e.theme]||e.theme||'—')+'</td><td>'+(NIVEAUX[e.niveau]||e.niveau||'—')+'</td><td>'+(FORMATS[e.format]||e.format||'—')+'</td></tr>').join('');
+}
+
+function exportCSV(){
+  const db=getDB();
+  if(!db.length){ alert('Aucune inscription à exporter.'); return; }
+  const headers=['#','Date','Prénom','Nom','Email','Âge','Pays','Établissement','Thème','Niveau','Format'];
+  const rows=db.map((e,i)=>[i+1,e.date,e.prenom,e.nom,e.email,e.age,e.pays,e.ecole||'',THEMES[e.theme]||e.theme||'',NIVEAUX[e.niveau]||e.niveau||'',FORMATS[e.format]||e.format||'']);
+  const csv=[headers,...rows].map(r=>r.map(cell=>'"'+(String(cell||'')).replace(/"/g,'""')+'"').join(';')).join('\n');
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url;
+  a.download='inscriptions_loupe_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click(); URL.revokeObjectURL(url);
+}
+
+function clearDB(){ if(confirm('Effacer toutes les inscriptions ? Cette action est irréversible.')){ localStorage.removeItem(DB_KEY); renderAdmin(); } }
+
+// THEME EXPLORER
+const THEME_DATA = {
+  loupe:   { color:'#5c7a4a', bg:'rgba(92,122,74,.08)', border:'rgba(92,122,74,.2)', heroBg:'linear-gradient(135deg,rgba(92,122,74,.12),rgba(92,122,74,.04))', haiku:['Une fourmi passe —','sous le ciel immense et bleu','elle porte sa vie.'], kigos:['rosée','givre','bourgeon','chaleur'], kigoColor:'#5c7a4a', kigoBg:'rgba(92,122,74,.12)', ideas:["Une fissure dans un mur","Un grain de poussière","L'oeil d'un moustique","Les rainures d'un galet"], ideasColor:'#5c7a4a', ideasBg:'rgba(92,122,74,.08)', desc:"Transforme un détail banal en spectacle fascinant. Regarde autour de toi : qu'y a-t-il de plus petit que tu n'as jamais remarqué ?" },
+  choses:  { color:'#d4607a', bg:'rgba(212,96,122,.07)', border:'rgba(212,96,122,.2)', heroBg:'linear-gradient(135deg,rgba(212,96,122,.1),rgba(212,96,122,.03))', haiku:['Le crayon seul —','attend que revienne la main','dans le silence.'], kigos:['écharpe','parapluie','châtaigne','ventilateur'], kigoColor:'#d4607a', kigoBg:'rgba(212,96,122,.1)', ideas:['Ton stylo préféré','Une chaise vide','Un livre fermé','Les clés sur la table'], ideasColor:'#d4607a', ideasBg:'rgba(212,96,122,.07)', desc:"Imagine ce que font les objets quand tu as le dos tourné. Chaque chose a une vie secrète — donne-lui une voix." },
+  royaumes:{ color:'#7ba7bc', bg:'rgba(123,167,188,.08)', border:'rgba(123,167,188,.25)', heroBg:'linear-gradient(135deg,rgba(123,167,188,.12),rgba(123,167,188,.03))', haiku:['Goutte de pluie —','un lac entier se reflète','dans sa rondeur.'], kigos:['flaque','buée','brume','averse'], kigoColor:'#7ba7bc', kigoBg:'rgba(123,167,188,.12)', ideas:["Une bulle de savon","La mousse d'un trottoir","Un reflet dans une vitre","Une fissure de mur"], ideasColor:'#7ba7bc', ideasBg:'rgba(123,167,188,.08)', desc:"Fais surgir un paysage entier dans une fissure ou une goutte d'eau. L'infiniment petit contient l'immense." },
+  sol:     { color:'#c9894a', bg:'rgba(201,137,74,.08)', border:'rgba(201,137,74,.2)', heroBg:'linear-gradient(135deg,rgba(201,137,74,.1),rgba(201,137,74,.03))', haiku:["Brin d'herbe géant —","la chenille s'y accroche","vent de septembre."], kigos:['semelle','boue','feuille morte','moustique'], kigoColor:'#c9894a', kigoBg:'rgba(201,137,74,.1)', ideas:["Une fourmi en marche","Les rainures du sol","Une miette oubliée","L'ombre d'une chaussure"], ideasColor:'#c9894a', ideasBg:'rgba(201,137,74,.07)', desc:"Raconte le monde à hauteur de fourmi. Couche-toi (ou imagine-le) et observe ce que personne ne voit jamais." }
+};
+
+function selectTheme(id){
+  document.getElementById('r-'+id).checked=true;
+  document.querySelectorAll('.theme-card-sel').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('tc-'+id).classList.add('selected');
+  document.getElementById('e-theme').style.display='none';
+  renderThemePreview(id);
+}
+
+function renderThemePreview(id){
+  const d=THEME_DATA[id];
+  const preview=document.getElementById('themePreview');
+  const kigosHtml=d.kigos.map((k,i)=>'<span class="kigo-tag" style="background:'+d.kigoBg+';color:'+d.kigoColor+';animation-delay:'+(i*0.08)+'s">'+k+'</span>').join('');
+  const ideasHtml=d.ideas.map((idea,i)=>'<span class="idea-pill" style="background:'+d.ideasBg+';color:'+d.ideasColor+';animation-delay:'+(i*0.06)+'s">'+idea+'</span>').join('');
+  preview.innerHTML='<div class="tp-hero" style="background:'+d.heroBg+';"><p class="tp-label">Exemple de haïku</p><div class="tp-haiku" style="color:'+d.color+';">'+d.haiku.map(l=>'<span>'+l+'</span>').join('')+'</div><div class="tp-kigo-wrap"><span class="tp-kigo-label" style="color:'+d.kigoColor+';">Kigos possibles</span>'+kigosHtml+'</div></div><div class="tp-body" style="background:'+d.bg+';border-top:1px solid '+d.border+';"><p class="tp-what-label" style="color:'+d.color+';">Idées de sujets</p><div class="tp-ideas">'+ideasHtml+'</div><p style="font-size:12.5px;color:#4a4a5a;line-height:1.65;margin-top:12px;">'+d.desc+'</p></div>';
+  preview.classList.add('show');
+  setTimeout(()=>preview.scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+}
+
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.style.animationPlayState='running';obs.unobserve(e.target);}});},{threshold:0.08});
+document.querySelectorAll('.card,.section-hd').forEach(el=>{el.style.animationPlayState='paused';obs.observe(el);});
+</script>
+</body>
+</html>

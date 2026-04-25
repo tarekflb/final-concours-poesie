@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inscription confirmée — Le Monde à la Loupe 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;700&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#1a1a2e; --paper:#fdf8f0; --warm:#f5efe3;
+  --bamboo:#5c7a4a; --moss:#3d5e2e;
+  --blossom:#d4607a; --petal:#f0b8c6;
+  --sky:#7ba7bc; --gold:#c9894a;
+  --mist:#dde8dd; --shadow:rgba(26,26,46,0.10);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--paper);color:var(--ink);font-family:'Nunito',sans-serif;font-weight:400;min-height:100vh;overflow-x:hidden;position:relative;}
+
+@keyframes petal-fall{0%{transform:translateY(-40px) translateX(0) rotate(0deg);opacity:0}10%{opacity:.7}80%{opacity:.4}100%{transform:translateY(102vh) translateX(60px) rotate(420deg);opacity:0}}
+.petal{position:fixed;z-index:0;pointer-events:none;animation:petal-fall linear infinite;}
+.p1{left:8%;width:12px;height:16px;animation-duration:9s;animation-delay:0s;}
+.p2{left:22%;width:9px;height:12px;animation-duration:13s;animation-delay:2s;}
+.p3{left:45%;width:14px;height:18px;animation-duration:11s;animation-delay:5s;}
+.p4{left:67%;width:10px;height:13px;animation-duration:15s;animation-delay:1s;}
+.p5{left:82%;width:11px;height:15px;animation-duration:10s;animation-delay:7s;}
+.p6{left:55%;width:8px;height:11px;animation-duration:14s;animation-delay:3.5s;}
+
+.bg-art{position:fixed;pointer-events:none;z-index:0;}
+.bg-left{left:-60px;top:10vh;width:220px;opacity:.13;}
+.bg-right{right:-40px;top:35vh;width:180px;opacity:.11;}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn{0%{transform:scale(.5);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+
+.container{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:40px 20px 80px;}
+.topbar{display:flex;justify-content:center;margin-bottom:32px;animation:fadeDown .7s ease both;}
+.header{text-align:center;margin-bottom:44px;animation:fadeDown .9s ease .1s both;}
+.header h1{font-family:'Zen Old Mincho',serif;font-size:clamp(1.8rem,6vw,3rem);font-weight:400;line-height:1.2;letter-spacing:.02em;color:var(--ink);margin-bottom:6px;}
+.accent{color:var(--blossom);}
+.tagline{font-family:'Zen Old Mincho',serif;font-size:13px;letter-spacing:4px;color:var(--bamboo);text-transform:uppercase;margin-bottom:20px;}
+.confetti-icon{font-size:3.5rem;margin-bottom:14px;display:block;animation:popIn .6s ease both;}
+
+.felicitations{display:inline-block;background:linear-gradient(135deg,rgba(92,122,74,.12),rgba(92,122,74,.05));border:1.5px solid var(--mist);border-radius:100px;padding:10px 24px;font-size:14px;font-weight:700;color:var(--bamboo);margin-bottom:18px;animation:fadeUp .5s ease .2s both;}
+.felicitations span{color:var(--blossom);}
+
+.branch-div{display:flex;align-items:center;gap:12px;margin:36px 0 28px;}
+.branch-div::before,.branch-div::after{content:'';flex:1;height:1px;background:linear-gradient(to right,transparent,var(--mist),transparent);}
+.branch-div-icon{font-size:1.3rem;flex-shrink:0;}
+
+.section-hd{display:flex;align-items:center;gap:14px;margin-bottom:20px;animation:fadeUp .6s ease both;}
+.sec-badge{width:38px;height:38px;border-radius:50%;border:2.5px solid var(--bamboo);background:rgba(92,122,74,.08);display:flex;align-items:center;justify-content:center;font-family:'Nunito',sans-serif;font-size:16px;font-weight:700;color:var(--bamboo);flex-shrink:0;}
+.sec-badge.gold{border-color:var(--gold);background:rgba(201,137,74,.07);color:var(--gold);}
+.sec-title{font-family:'Zen Old Mincho',serif;font-size:1.3rem;font-weight:400;color:var(--ink);letter-spacing:.04em;}
+
+.card{background:rgba(255,255,255,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.85);border-radius:22px;padding:28px 26px;box-shadow:0 4px 28px var(--shadow);animation:fadeUp .7s ease both;}
+
+.inner-sep{display:flex;align-items:center;gap:10px;color:#ddd;font-size:10px;letter-spacing:3px;text-transform:uppercase;}
+.inner-sep::before,.inner-sep::after{content:'';flex:1;height:1px;background:var(--mist);}
+
+.meta-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid rgba(221,232,221,.5);}
+.meta-row:last-child{border-bottom:none;}
+.meta-key{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--bamboo);}
+.meta-val{font-size:13px;font-weight:600;color:var(--ink);}
+
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px;}
+.action-card{border-radius:18px;padding:20px 18px;text-align:center;text-decoration:none;transition:transform .2s,box-shadow .2s;display:block;}
+.action-card:hover{transform:translateY(-2px);}
+.action-card.primary{background:linear-gradient(135deg,var(--bamboo),var(--moss));box-shadow:0 4px 20px rgba(61,94,46,.25);}
+.action-card.secondary{background:rgba(253,248,240,.85);border:1.5px solid var(--mist);}
+.action-card.primary:hover{box-shadow:0 8px 28px rgba(61,94,46,.3);}
+.action-card.secondary:hover{border-color:var(--bamboo);}
+.action-icon{font-size:1.8rem;margin-bottom:10px;display:block;}
+.action-title{font-family:'Zen Old Mincho',serif;font-size:15px;font-weight:400;line-height:1.35;margin-bottom:5px;}
+.action-card.primary .action-title{color:var(--paper);}
+.action-card.secondary .action-title{color:var(--ink);}
+.action-desc{font-size:12px;line-height:1.5;}
+.action-card.primary .action-desc{color:rgba(253,248,240,.6);}
+.action-card.secondary .action-desc{color:#888;}
+
+.deadline-pill{display:inline-flex;align-items:center;gap:8px;padding:11px 26px;background:var(--ink);color:var(--paper);border-radius:100px;font-size:14px;font-weight:700;letter-spacing:.5px;box-shadow:0 4px 16px rgba(26,26,46,.18);}
+.dl-highlight{color:var(--petal);}
+
+.footer-area{text-align:center;margin-top:56px;padding-top:24px;border-top:1px solid var(--mist);}
+.footer-area p{font-size:12px;color:#ccc;letter-spacing:.06em;line-height:1.9;}
+.footer-area a{color:#bbb;text-decoration:underline;}
+
+/* Thème badge */
+.theme-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:100px;font-size:13px;font-weight:700;}
+</style>
+</head>
+<body>
+
+<svg class="petal p1" viewBox="0 0 12 16"><ellipse cx="6" cy="8" rx="5" ry="7" fill="#d4607a" opacity=".7"/></svg>
+<svg class="petal p2" viewBox="0 0 9 12"><ellipse cx="4.5" cy="6" rx="4" ry="5.5" fill="#f0b8c6" opacity=".6"/></svg>
+<svg class="petal p3" viewBox="0 0 14 18"><ellipse cx="7" cy="9" rx="6" ry="8" fill="#d4607a" opacity=".5"/></svg>
+<svg class="petal p4" viewBox="0 0 10 13"><ellipse cx="5" cy="6.5" rx="4.5" ry="6" fill="#f0b8c6" opacity=".65"/></svg>
+<svg class="petal p5" viewBox="0 0 11 15"><ellipse cx="5.5" cy="7.5" rx="5" ry="7" fill="#d4607a" opacity=".55"/></svg>
+<svg class="petal p6" viewBox="0 0 8 11"><ellipse cx="4" cy="5.5" rx="3.5" ry="5" fill="#f0b8c6" opacity=".5"/></svg>
+
+<svg class="bg-art bg-left" viewBox="0 0 200 400" fill="none">
+  <line x1="100" y1="0" x2="100" y2="400" stroke="#5c7a4a" stroke-width="1.5"/>
+  <ellipse cx="100" cy="70" rx="18" ry="28" fill="#d4607a" opacity=".4"/>
+  <ellipse cx="80" cy="120" rx="14" ry="22" fill="#f0b8c6" opacity=".5"/>
+  <ellipse cx="118" cy="165" rx="16" ry="25" fill="#d4607a" opacity=".35"/>
+  <ellipse cx="88" cy="215" rx="12" ry="20" fill="#f0b8c6" opacity=".45"/>
+  <line x1="100" y1="70" x2="80" y2="120" stroke="#5c7a4a" stroke-width="1"/>
+  <line x1="100" y1="120" x2="118" y2="165" stroke="#5c7a4a" stroke-width="1"/>
+  <line x1="100" y1="165" x2="88" y2="215" stroke="#5c7a4a" stroke-width="1"/>
+</svg>
+<svg class="bg-art bg-right" viewBox="0 0 180 300" fill="none">
+  <line x1="90" y1="0" x2="90" y2="300" stroke="#5c7a4a" stroke-width="1.2"/>
+  <ellipse cx="90" cy="55" rx="14" ry="22" fill="#c9894a" opacity=".3"/>
+  <ellipse cx="110" cy="105" rx="12" ry="18" fill="#d4607a" opacity=".3"/>
+  <ellipse cx="72" cy="150" rx="13" ry="20" fill="#f0b8c6" opacity=".35"/>
+</svg>
+
+<div class="container">
+
+  <div class="topbar">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+        <circle cx="32" cy="32" r="30" stroke="#d4607a" stroke-width="1.5" opacity=".4"/>
+        <circle cx="32" cy="32" r="22" stroke="#d4607a" stroke-width="1" opacity=".25"/>
+        <circle cx="32" cy="32" r="12" stroke="#d4607a" stroke-width=".8" opacity=".2"/>
+        <text x="32" y="40" text-anchor="middle" font-size="20" fill="#d4607a" opacity=".75">🔍</text>
+      </svg>
+      <p style="font-family:'Zen Old Mincho',serif;font-size:12px;letter-spacing:3px;color:var(--bamboo);text-transform:uppercase;">Skoolup · 2026</p>
+    </div>
+  </div>
+
+  <div class="header">
+    <span class="confetti-icon">🎉</span>
+    <div class="felicitations">✓ Félicitations, <span id="prenomDisplay">participant</span> ! Tu es inscrit·e !</div>
+    <p class="tagline">Concours le monde à la loupe</p>
+    <h1>Bienvenue,<br><span class="accent" id="prenomTitle">ami·e</span>&nbsp;!</h1>
+  </div>
+
+  <div class="section-hd" style="animation-delay:.1s">
+    <div class="sec-badge">🌸</div>
+    <h2 class="sec-title">Ton inscription est enregistrée</h2>
+  </div>
+  <div class="card" style="animation-delay:.15s">
+    <p style="font-size:14.5px;line-height:1.85;color:#4a4a5a;">
+      Merci d'avoir rejoint le concours <em style="color:var(--bamboo);font-style:normal;font-weight:700;">Le monde à la loupe</em> !<br>
+      Ton regard sur l'infiniment petit est déjà précieux. 🌿
+    </p>
+
+    <div class="inner-sep">✦</div>
+
+    <div>
+      <div class="meta-row">
+        <span class="meta-key">Participant·e</span>
+        <span class="meta-val" id="metaPrenom">—</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-key">Thème choisi</span>
+        <span class="meta-val" id="metaTheme">—</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-key">Niveau</span>
+        <span class="meta-val" id="metaNiveau">—</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-key">Pays</span>
+        <span class="meta-val" id="metaPays">—</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-key">Date limite</span>
+      
+        <span class="meta-val" style="color:var(--blossom);">22 mai 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="branch-div"><span class="branch-div-icon">🌸</span></div>
+
+  <div class="section-hd" style="animation-delay:.2s">
+    <div class="sec-badge gold">②</div>
+    <h2 class="sec-title">Et maintenant ?</h2>
+  </div>
+  <div class="card" style="animation-delay:.25s">
+    <p style="font-size:14.5px;line-height:1.85;color:#4a4a5a;margin-bottom:20px;">
+      Tu peux <strong>déposer ton œuvre directement</strong> si elle est prête, ou d'abord <strong>t'entraîner avec le guide</strong> du haïjin avant de soumettre ta création finale.
+    </p>
+    <div class="action-grid">
+      <a href="https://dancing-jalebi-77432d.netlify.app/" class="action-card primary">
+        <span class="action-icon">📤</span>
+        <div class="action-title">Déposer mon œuvre</div>
+        <div class="action-desc">Photo, vidéo, texte ou création physique</div>
+      </a>
+      <a href="https://glittering-llama-2a4252.netlify.app/" class="action-card secondary">
+        <span class="action-icon">📖</span>
+        <div class="action-title">Accéder au guide</div>
+        <div class="action-desc">Exercices, quiz et atelier d'écriture</div>
+      </a>
+    </div>
+  </div>
+
+
+  <div class="branch-div"><span class="branch-div-icon">🌿</span></div>
+
+  <div style="text-align:center;animation:fadeUp .8s ease .3s both;">
+    <span class="deadline-pill">⏳ Fermeture des portes le <span class="dl-highlight">&nbsp; 22 mai</span></span>
+    <p style="font-size:12px;color:#aaa;margin-top:12px;line-height:1.6;">Des questions ? Répondez directement à cet email.</p>
+  </div>
+
+  <div class="footer-area">
+    <p>✦ Plonger Concours de Haïku · Skoolup · 2026</p>
+    <p><a href="#">Se désabonner</a></p>
+  </div>
+
+</div>
+
+<script>
+// Récupération des paramètres URL
+const params = new URLSearchParams(window.location.search);
+const prenom = params.get('prenom') || 'participant·e';
+const nom    = params.get('nom')    || '';
+const email  = params.get('email')  || '';
+const theme  = params.get('theme')  || '';
+const niveau = params.get('niveau') || '';
+const pays   = params.get('pays')   || '';
+const age    = params.get('age')    || '';
+
+const THEMES  = {
+  loupe:    '🔬 Plonger dans le petit',
+  choses:   '✏️ La vie secrète des choses',
+  royaumes: '💧 Les royaumes cachés',
+  sol:      '👟 Au ras du sol'
+};
+const NIVEAUX = {
+  debutant:      '🌱 Débutant',
+  intermediaire: '🌿 Intermédiaire',
+  confirme:      '🍃 Confirmé'
+};
+
+document.getElementById('prenomDisplay').textContent = prenom;
+document.getElementById('prenomTitle').textContent   = prenom;
+document.getElementById('metaPrenom').textContent    = (prenom + ' ' + nom).trim() || '—';
+document.getElementById('metaTheme').textContent     = THEMES[theme]   || theme  || '—';
+document.getElementById('metaNiveau').textContent    = NIVEAUX[niveau] || niveau || '—';
+document.getElementById('metaPays').textContent      = pays || '—';
+
+
+// Injection dans la page
+document.getElementById('prenomDisplay').textContent = prenom;
+document.getElementById('prenomTitle').textContent   = prenom;
+document.getElementById('metaPrenom').textContent    = prenom;
+document.getElementById('metaTheme').textContent     = THEMES[theme]  || theme  || '—';
+document.getElementById('metaNiveau').textContent    = NIVEAUX[niveau] || niveau || '—';
+document.getElementById('metaPays').textContent      = pays || '—';
+</script>
+</body>
+</html>
