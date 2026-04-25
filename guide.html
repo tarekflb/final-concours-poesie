@@ -578,7 +578,7 @@ function switchTab(id, btn) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if (id === 'coach') initCoach();
 }
- 
+
 // ── THÈMES ──
 function switchTheme(n, btn, color) {
   document.querySelectorAll('.theme-panel').forEach(p => p.classList.remove('active'));
@@ -586,7 +586,7 @@ function switchTheme(n, btn, color) {
   document.getElementById('theme' + n).classList.add('active');
   btn.classList.add('active-' + color);
 }
- 
+
 // ── COMPTEUR DE SYLLABES ──
 function countSyl(text) {
   return (text.toLowerCase().replace(/[^a-zàâäéèêëîïôùûüœæç]/g, '').match(/[aeiouyàâäéèêëîïôùûüœæç]+/g) || []).length;
@@ -613,7 +613,7 @@ function updateDraft() {
   previewBox.style.display = 'block';
   document.getElementById('previewLines').innerHTML = lines.map(l => `<p>${l || ' '}</p>`).join('');
 }
- 
+
 // ── QUIZ ──
 const QUESTIONS = [
   { q: "Combien de syllabes a un haïku au total ?", opts: ["12","17","14","21"], ans: 1, exp: "5 + 7 + 5 = 17 syllabes réparties sur 3 lignes." },
@@ -623,7 +623,7 @@ const QUESTIONS = [
   { q: "Le haïku est-il obligatoirement rimé ?", opts: ["Oui, toujours","Non, jamais","Seulement les lignes 1 et 3","Parfois"], ans: 1, exp: "Zéro rime obligatoire ! On privilégie l'image, la sensation, la justesse." },
 ];
 let qIdx = 0, qScore = 0, qAnswered = false;
- 
+
 function renderQuestion() {
   const q = QUESTIONS[qIdx];
   document.getElementById('qNum').textContent = qIdx + 1;
@@ -638,7 +638,7 @@ function renderQuestion() {
       <span class="opt-dot-q" id="ltr${i}">${String.fromCharCode(65 + i)}</span>${o}
     </button>`).join('');
 }
- 
+
 function answerQuiz(i) {
   if (qAnswered) return;
   qAnswered = true;
@@ -657,13 +657,13 @@ function answerQuiz(i) {
   nb.style.display = 'block';
   nb.textContent = qIdx + 1 >= QUESTIONS.length ? 'Voir mon score →' : 'Question suivante →';
 }
- 
+
 function nextQuestion() {
   qIdx++;
   if (qIdx >= QUESTIONS.length) { showResult(); return; }
   renderQuestion();
 }
- 
+
 function showResult() {
   document.getElementById('quizMain').style.display = 'none';
   document.getElementById('quizResult').style.display = 'block';
@@ -674,16 +674,16 @@ function showResult() {
     : qScore >= 3 ? 'Très bien ! Quelques révisions et tu es prêt.'
     : 'Continue à lire le guide — tu vas progresser !';
 }
- 
+
 function resetQuiz() {
   qIdx = 0; qScore = 0; qAnswered = false;
   document.getElementById('quizMain').style.display = 'block';
   document.getElementById('quizResult').style.display = 'none';
   renderQuestion();
 }
- 
+
 renderQuestion();
- 
+
 // ── SCROLL ANIMATIONS ──
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => {
@@ -693,24 +693,24 @@ const obs = new IntersectionObserver(entries => {
 document.querySelectorAll('.card').forEach(el => {
   el.style.animationPlayState = 'paused'; obs.observe(el);
 });
- 
- 
+
+
 // ══════════════════════════════════════════════════════════════
 //  COACH IA — Hana  (via Netlify Function — CORS résolu)
 // ══════════════════════════════════════════════════════════════
- 
+
 const COACH_SYSTEM = `Tu es Hana, un coach poétique bienveillant et enthousiaste pour le concours de haïku "Le Monde à la Loupe" destiné aux jeunes de 10 à 17 ans.
- 
+
 Ton rôle : accompagner chaque participant à créer son haïku (3 lignes, 5-7-5 syllabes) ET son œuvre artistique (photo, dessin, vidéo, audio, objet physique) en lien avec un des 4 thèmes du concours.
- 
+
 Les 4 thèmes :
 - 🔬 Le monde à la loupe : un détail minuscule du quotidien
 - ✏️ La vie secrète des choses : ce que font les objets quand on a le dos tourné
 - 💧 Les royaumes cachés : l'immense dans l'infiniment petit
 - 👟 Au ras du sol : le monde vu à hauteur de fourmi
- 
+
 Le kigo : un mot de saison glissé dans le haïku sans nommer la saison.
- 
+
 Règles :
 - Parle TOUJOURS en "tu", de façon chaleureuse et simple
 - Adapte ton langage à un enfant/ado de 10-17 ans
@@ -719,24 +719,35 @@ Règles :
 - Quand tu corriges un haïku : dis d'abord ce qui est bien, puis suggère une amélioration
 - N'écris JAMAIS le haïku complet à la place du participant
 - Réponds toujours en français`;
- 
+
 let coachMessages = [];
 let coachStarted = false;
- 
-// ─── SEUL CHANGEMENT : URL pointe vers la Netlify Function ────
+
+// ─── URL pointe vers la Netlify Function ────
 const COACH_API_URL = '/.netlify/functions/coach';
- 
+
+// ─── LIMITE ANTI-ABUS ───
+const COACH_MAX_MESSAGES = 20;
+let coachMessageCount = 0;
+
 async function coachSend(userMsg) {
   if (!userMsg.trim()) return;
- 
+
+  // Limite anti-abus : bloquer après MAX messages
+  if (coachMessageCount >= COACH_MAX_MESSAGES) {
+    appendCoachMsg('assistant', '🌸 Tu as échangé ' + COACH_MAX_MESSAGES + ' messages avec moi — c\'est super ! Pour préserver mes ressources, notre discussion s\'arrête ici. Tu as maintenant tout ce qu\'il faut pour finir ton haïku ! Recharge la page si tu veux recommencer une nouvelle session. 🌿');
+    clearCoachInput();
+    return;
+  }
+  coachMessageCount++;
+
   appendCoachMsg('user', userMsg);
   clearCoachInput();
   showCoachTyping();
- 
+
   coachMessages.push({ role: 'user', content: userMsg });
- 
+
   try {
-    // ↓ Appel à la Netlify Function (proxy sécurisé)
     const res = await fetch(COACH_API_URL, {
       method : 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -745,51 +756,63 @@ async function coachSend(userMsg) {
         system  : COACH_SYSTEM,
       }),
     });
- 
+
     if (!res.ok) {
       throw new Error(`HTTP ${res.status}`);
     }
- 
+
     const data  = await res.json();
     const reply = data.content?.[0]?.text
       || 'Désolée, je n\'ai pas bien compris. Peux-tu reformuler ? 🌿';
- 
+
     coachMessages.push({ role: 'assistant', content: reply });
     hideCoachTyping();
     appendCoachMsg('assistant', reply);
- 
+
   } catch (e) {
     console.error('Erreur coach :', e);
     hideCoachTyping();
     appendCoachMsg('assistant', 'Oups ! Une petite erreur technique… Réessaie dans un instant 🌸');
   }
 }
- 
+
 function appendCoachMsg(role, text) {
   const feed = document.getElementById('coachFeed');
   const div  = document.createElement('div');
   div.className = 'coach-msg ' + role;
- 
+
   if (role === 'assistant') {
     div.innerHTML = `<span class="coach-avatar">🌿</span><div class="coach-bubble">${formatCoachText(text)}</div>`;
   } else {
     div.innerHTML = `<div class="coach-bubble">${formatCoachText(text)}</div>`;
   }
- 
+
   const starters = document.getElementById('coachStarters');
   if (starters) starters.remove();
- 
+
   feed.appendChild(div);
+
+  // Afficher le compteur de messages restants si proche de la limite
+  if (role === 'user') {
+    const remaining = COACH_MAX_MESSAGES - coachMessageCount;
+    if (remaining > 0 && remaining <= 5) {
+      const warn = document.createElement('div');
+      warn.style.cssText = 'text-align:center;font-size:11px;color:#aaa;font-style:italic;margin:4px 0;';
+      warn.textContent = '💬 Il te reste ' + remaining + ' message' + (remaining > 1 ? 's' : '') + ' avec Hana';
+      feed.appendChild(warn);
+    }
+  }
+
   div.scrollIntoView({ behavior: 'smooth', block: 'end' });
 }
- 
+
 function formatCoachText(text) {
   return text
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.*?)\*/g, '<em>$1</em>')
     .replace(/\n/g, '<br>');
 }
- 
+
 function showCoachTyping() {
   const feed = document.getElementById('coachFeed');
   const div  = document.createElement('div');
@@ -799,18 +822,18 @@ function showCoachTyping() {
   feed.appendChild(div);
   div.scrollIntoView({ behavior: 'smooth', block: 'end' });
 }
- 
+
 function hideCoachTyping() {
   const t = document.getElementById('coachTyping');
   if (t) t.remove();
 }
- 
+
 function clearCoachInput() {
   const el = document.getElementById('coachInput');
   el.value = '';
   el.style.height = 'auto';
 }
- 
+
 function handleCoachKey(e) {
   if (e.key === 'Enter' && !e.shiftKey) {
     e.preventDefault();
@@ -818,26 +841,26 @@ function handleCoachKey(e) {
     if (val) coachSend(val);
   }
 }
- 
+
 function sendCoachInput() {
   const val = document.getElementById('coachInput').value.trim();
   if (val) coachSend(val);
 }
- 
+
 function startWithTheme(msg) {
   coachSend(msg);
 }
- 
+
 function initCoach() {
   if (coachStarted) return;
   coachStarted = true;
- 
+
   const feed    = document.getElementById('coachFeed');
   const welcome = document.createElement('div');
   welcome.className = 'coach-msg assistant';
   welcome.innerHTML = `<span class="coach-avatar">🌿</span><div class="coach-bubble">Bonjour ! Je suis <strong>Hana</strong>, ton coach poétique pour le concours 🌸<br><br>Je suis là pour t'aider à créer ton haïku et ton œuvre, étape par étape. Pas de panique — on y va ensemble !<br><br>Par quel thème veux-tu commencer ?</div>`;
   feed.appendChild(welcome);
- 
+
   coachMessages.push({
     role   : 'assistant',
     content: "Bonjour ! Je suis Hana, ton coach poétique pour le concours 🌸\n\nJe suis là pour t'aider à créer ton haïku et ton œuvre, étape par étape. Pas de panique — on y va ensemble !\n\nPar quel thème veux-tu commencer ?"
