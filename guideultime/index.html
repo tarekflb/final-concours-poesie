@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guide du parfait haïjin — Plonger dans le Petit2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;700&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#1a1a2e; --paper:#fdf8f0; --warm:#f5efe3;
+  --bamboo:#5c7a4a; --moss:#3d5e2e;
+  --blossom:#d4607a; --petal:#f0b8c6;
+  --sky:#7ba7bc; --gold:#c9894a;
+  --mist:#dde8dd; --purple:#6b3fa0; --orange:#e88420;
+  --shadow:rgba(26,26,46,0.10);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--paper);color:var(--ink);font-family:'Nunito',sans-serif;font-weight:400;min-height:100vh;overflow-x:hidden;position:relative;}
+
+/* ── PÉTALES ── */
+@keyframes petal-fall{0%{transform:translateY(-40px) translateX(0) rotate(0deg);opacity:0}10%{opacity:.7}80%{opacity:.4}100%{transform:translateY(102vh) translateX(60px) rotate(420deg);opacity:0}}
+.petal{position:fixed;z-index:0;pointer-events:none;animation:petal-fall linear infinite;}
+.p1{left:8%;width:12px;height:16px;animation-duration:9s;animation-delay:0s;}
+.p2{left:22%;width:9px;height:12px;animation-duration:13s;animation-delay:2s;}
+.p3{left:45%;width:14px;height:18px;animation-duration:11s;animation-delay:5s;}
+.p4{left:67%;width:10px;height:13px;animation-duration:15s;animation-delay:1s;}
+.p5{left:82%;width:11px;height:15px;animation-duration:10s;animation-delay:7s;}
+.p6{left:55%;width:8px;height:11px;animation-duration:14s;animation-delay:3.5s;}
+
+/* ── BG SVG ── */
+.bg-art{position:fixed;pointer-events:none;z-index:0;}
+.bg-left{left:-60px;top:10vh;width:220px;opacity:.13;}
+.bg-right{right:-40px;top:35vh;width:180px;opacity:.11;}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── LAYOUT ── */
+.container{position:relative;z-index:1;max-width:700px;margin:0 auto;padding:40px 20px 80px;}
+
+/* ── TOPBAR ── */
+.topbar{display:flex;justify-content:center;margin-bottom:28px;animation:fadeDown .7s ease both;}
+
+/* ── HEADER ── */
+.header{text-align:center;margin-bottom:40px;animation:fadeDown .9s ease .1s both;}
+.header h1{font-family:'Zen Old Mincho',serif;font-size:clamp(2rem,7vw,3.4rem);font-weight:400;line-height:1.15;letter-spacing:.02em;color:var(--ink);margin-bottom:6px;}
+.accent{color:var(--blossom);}
+.tagline{font-family:'Zen Old Mincho',serif;font-size:14px;letter-spacing:4px;color:var(--bamboo);text-transform:uppercase;margin-bottom:18px;}
+.header-sub{font-size:14.5px;line-height:1.75;color:#4a4a5a;max-width:500px;margin:0 auto;}
+
+/* ── TABS ── */
+.tabs-wrap{background:rgba(255,255,255,.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:18px;border:1px solid rgba(255,255,255,.85);box-shadow:0 2px 16px var(--shadow);padding:6px;display:flex;gap:4px;margin-bottom:36px;overflow-x:auto;}
+.tab-btn{flex:1;min-width:120px;padding:12px 8px;background:transparent;border:none;border-radius:13px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:600;color:#888;cursor:pointer;transition:all .2s;white-space:nowrap;text-align:center;}
+.tab-btn.active{background:var(--ink);color:var(--paper);}
+.tab-btn:hover:not(.active){background:rgba(92,122,74,.08);color:var(--bamboo);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* ── BRANCH DIVIDER ── */
+.branch-div{display:flex;align-items:center;gap:12px;margin:36px 0 28px;}
+.branch-div::before,.branch-div::after{content:'';flex:1;height:1px;background:linear-gradient(to right,transparent,var(--mist),transparent);}
+.branch-div-icon{font-size:1.3rem;flex-shrink:0;}
+
+/* ── SECTION HEADER ── */
+.section-hd{display:flex;align-items:center;gap:14px;margin-bottom:20px;}
+.sec-badge{width:38px;height:38px;border-radius:50%;border:2.5px solid var(--bamboo);background:rgba(92,122,74,.08);display:flex;align-items:center;justify-content:center;font-family:'Nunito',sans-serif;font-size:16px;font-weight:700;color:var(--bamboo);flex-shrink:0;}
+.sec-badge.blossom{border-color:var(--blossom);background:rgba(212,96,122,.06);color:var(--blossom);}
+.sec-badge.gold{border-color:var(--gold);background:rgba(201,137,74,.07);color:var(--gold);}
+.sec-title{font-family:'Zen Old Mincho',serif;font-size:1.25rem;font-weight:400;color:var(--ink);letter-spacing:.04em;}
+
+/* ── CARD ── */
+.card{background:rgba(255,255,255,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.85);border-radius:22px;padding:28px 26px;box-shadow:0 4px 28px var(--shadow);animation:fadeUp .7s ease both;margin-bottom:20px;}
+
+/* ── INNER SEP ── */
+.inner-sep{display:flex;align-items:center;gap:10px;color:#ddd;font-size:10px;letter-spacing:3px;text-transform:uppercase;margin:4px 0;}
+.inner-sep::before,.inner-sep::after{content:'';flex:1;height:1px;background:var(--mist);}
+
+/* ── HAIKU CARD ── */
+.haiku-card{background:rgba(253,248,240,.85);border:1px solid var(--mist);border-radius:16px;padding:18px 22px;margin-bottom:10px;position:relative;overflow:hidden;}
+.haiku-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(to bottom,var(--blossom),var(--petal));}
+.haiku-inner{padding-left:14px;}
+.haiku-line{font-family:'Zen Old Mincho',serif;font-size:17px;color:var(--ink);line-height:2;letter-spacing:.04em;}
+.haiku-line-row{display:flex;align-items:center;justify-content:space-between;}
+.syl-badge{font-size:11px;font-weight:700;color:var(--bamboo);background:var(--mist);border-radius:100px;padding:2px 8px;margin-left:8px;flex-shrink:0;}
+.haiku-author{font-size:11px;color:#aaa;margin-top:10px;font-family:'Nunito',sans-serif;}
+
+/* ── STRUCTURE GRID ── */
+.struct-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+.struct-cell{border-radius:14px;padding:16px 10px;text-align:center;}
+.struct-cell.light{background:rgba(253,248,240,.85);border:1.5px solid var(--mist);}
+.struct-cell.dark{background:var(--ink);border:1.5px solid var(--ink);}
+.struct-n{font-size:32px;font-weight:700;font-family:'Nunito',sans-serif;}
+.struct-cell.light .struct-n{color:var(--blossom);}
+.struct-cell.dark .struct-n{color:var(--petal);}
+.struct-label{font-family:'Zen Old Mincho',serif;font-size:13px;margin-top:4px;}
+.struct-cell.light .struct-label{color:var(--ink);}
+.struct-cell.dark .struct-label{color:rgba(255,255,255,.85);}
+.struct-desc{font-size:11px;margin-top:3px;}
+.struct-cell.light .struct-desc{color:#888;}
+.struct-cell.dark .struct-desc{color:rgba(255,255,255,.4);}
+
+/* ── INGREDIENT ── */
+.ingredient{display:flex;gap:14px;background:rgba(253,248,240,.85);border:1px solid var(--mist);border-radius:14px;padding:14px 16px;margin-bottom:10px;}
+.ing-icon{font-size:20px;flex-shrink:0;}
+.ing-title{font-size:14px;font-weight:700;color:var(--bamboo);margin-bottom:4px;font-family:'Nunito',sans-serif;}
+.ingredient.blossom .ing-title{color:var(--blossom);}
+.ingredient.gold .ing-title{color:var(--gold);}
+.ing-desc{font-size:13px;color:#4a4a5a;line-height:1.65;}
+
+/* ── TIPS ── */
+.tip-item{display:flex;gap:10px;background:rgba(253,248,240,.85);border:1px solid var(--mist);border-radius:12px;padding:11px 14px;margin-bottom:8px;}
+.tip-n{color:var(--gold);font-weight:700;font-size:13px;flex-shrink:0;}
+.tip-txt{font-size:13px;color:#4a4a5a;line-height:1.65;}
+
+/* ── ERRORS ── */
+.err-row{background:rgba(255,255,255,.7);border:1px solid rgba(221,232,221,.6);border-radius:12px;overflow:hidden;margin-bottom:10px;}
+.err-bad{padding:10px 14px;background:rgba(212,96,122,.07);display:flex;gap:8px;align-items:center;font-size:13px;color:var(--blossom);font-style:italic;}
+.err-good{padding:10px 14px;background:rgba(92,122,74,.07);display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--moss);font-style:italic;line-height:1.55;}
+
+/* ── THEMES TAB ── */
+.theme-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:24px;}
+.theme-btn{background:rgba(255,255,255,.65);border:1.5px solid var(--mist);border-radius:16px;padding:14px;cursor:pointer;text-align:left;transition:all .2s;font-family:'Nunito',sans-serif;}
+.theme-btn.active-bamboo{background:var(--bamboo);border-color:var(--bamboo);color:#fff;}
+.theme-btn.active-blossom{background:var(--blossom);border-color:var(--blossom);color:#fff;}
+.theme-btn:hover:not(.active-bamboo):not(.active-blossom){border-color:var(--bamboo);}
+.theme-btn-emoji{font-size:18px;margin-bottom:6px;}
+.theme-btn-title{font-size:12px;font-weight:700;line-height:1.3;}
+.theme-panel{display:none;}
+.theme-panel.active{display:block;}
+.theme-hero{border-radius:18px;padding:22px;margin-bottom:20px;}
+.theme-hero h2{font-family:'Zen Old Mincho',serif;font-size:22px;margin-bottom:8px;margin-top:0;}
+.theme-hero p{font-size:14px;color:#4a4a5a;line-height:1.65;}
+.exo-item{background:rgba(255,255,255,.65);border:1px solid var(--mist);border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;margin-bottom:9px;}
+.exo-num{width:28px;height:28px;border-radius:8px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;font-family:'Nunito',sans-serif;}
+.exo-txt{font-size:13px;color:#4a4a5a;line-height:1.65;}
+.tip-strip{border-radius:12px;padding:14px 16px;border-left:4px solid;}
+.tip-strip p{font-size:13px;color:#4a4a5a;line-height:1.65;font-style:italic;}
+
+/* ── ATELIER ── */
+.atelier-hero{background:var(--ink);border-radius:20px;padding:28px 26px;margin-bottom:28px;text-align:center;position:relative;overflow:hidden;}
+.atelier-hero::after{content:'🌿';position:absolute;bottom:-10px;right:16px;font-size:80px;opacity:.08;}
+.atelier-hero h2{font-family:'Zen Old Mincho',serif;font-size:1.6rem;color:var(--paper);margin:8px 0;font-weight:400;}
+.atelier-hero p{font-size:13px;color:rgba(253,248,240,.55);line-height:1.65;}
+.inspi-item{background:rgba(255,255,255,.6);border:1px solid var(--mist);border-radius:12px;padding:12px 16px;font-size:13px;color:#4a4a5a;line-height:1.6;margin-bottom:8px;display:flex;gap:10px;}
+.haiku-ta{width:100%;border:1.5px solid var(--mist);border-radius:14px;padding:16px 18px;font-family:'Zen Old Mincho',serif;font-size:19px;line-height:2.1;letter-spacing:.04em;color:var(--ink);background:rgba(253,248,240,.85);outline:none;resize:vertical;transition:border-color .22s,box-shadow .22s;}
+.haiku-ta:focus{border-color:var(--bamboo);background:#fff;box-shadow:0 0 0 4px rgba(92,122,74,.1);}
+.syl-box{background:rgba(255,255,255,.6);border:1px solid var(--mist);border-radius:12px;padding:12px 16px;margin-top:10px;}
+.syl-row-item{display:flex;justify-content:space-between;padding:4px 0;font-size:13px;border-bottom:1px solid rgba(221,232,221,.5);}
+.syl-row-item:last-child{border-bottom:none;}
+.syl-italic{font-style:italic;color:#888;font-family:'Zen Old Mincho',serif;}
+.syl-ok{font-weight:700;color:var(--bamboo);}
+.syl-ko{font-weight:700;color:var(--blossom);}
+.syl-total{margin-top:8px;font-size:12px;font-weight:700;}
+.preview-box{background:var(--ink);border-radius:16px;padding:22px 26px;margin-top:16px;text-align:center;position:relative;overflow:hidden;}
+.preview-box::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--blossom),var(--gold));}
+.preview-label{font-size:10px;color:rgba(253,248,240,.3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;font-family:'Nunito',sans-serif;}
+.preview-lines p{font-family:'Zen Old Mincho',serif;font-size:19px;color:rgba(253,248,240,.9);line-height:2.1;letter-spacing:.04em;margin:0;}
+.preview-credit{font-size:11px;color:rgba(253,248,240,.2);margin-top:12px;font-family:'Nunito',sans-serif;}
+.memo-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.memo-item{background:rgba(253,248,240,.85);border:1px solid var(--mist);border-radius:12px;padding:12px 14px;}
+.memo-key{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--bamboo);margin-bottom:3px;}
+.memo-val{font-size:13px;color:var(--ink);}
+
+/* ── QUIZ ── */
+.quiz-hero{background:var(--ink);border-radius:20px;padding:28px 26px;margin-bottom:28px;text-align:center;position:relative;overflow:hidden;}
+.quiz-hero::after{content:'🎯';position:absolute;bottom:-10px;right:16px;font-size:80px;opacity:.08;}
+.quiz-hero h2{font-family:'Zen Old Mincho',serif;font-size:1.6rem;color:var(--paper);margin:8px 0;font-weight:400;}
+.quiz-hero p{font-size:13px;color:rgba(253,248,240,.5);}
+.quiz-progress-bar{background:rgba(221,232,221,.3);border-radius:100px;height:4px;margin-bottom:22px;overflow:hidden;}
+.quiz-progress-fill{background:linear-gradient(to right,var(--bamboo),var(--blossom));height:4px;border-radius:100px;transition:width .4s ease;}
+.quiz-meta{display:flex;justify-content:space-between;font-size:13px;margin-bottom:12px;}
+.quiz-q-card{background:rgba(255,255,255,.72);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.85);border-radius:18px;padding:20px 22px;margin-bottom:14px;box-shadow:0 4px 20px var(--shadow);}
+.quiz-q{font-family:'Zen Old Mincho',serif;font-size:17px;color:var(--ink);line-height:1.55;}
+.quiz-option{display:flex;gap:12px;align-items:center;background:rgba(253,248,240,.85);border:1.5px solid var(--mist);border-radius:13px;padding:13px 15px;cursor:pointer;margin-bottom:9px;font-size:13.5px;font-weight:600;color:var(--ink);transition:all .15s;width:100%;text-align:left;font-family:'Nunito',sans-serif;}
+.quiz-option:hover{border-color:var(--bamboo);background:rgba(92,122,74,.07);}
+.quiz-option.correct{background:rgba(92,122,74,.1);border-color:var(--bamboo);color:var(--moss);}
+.quiz-option.wrong{background:rgba(212,96,122,.08);border-color:var(--blossom);color:var(--blossom);}
+.opt-dot-q{width:18px;height:18px;border:1.5px solid #ccc;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;transition:all .15s;}
+.opt-dot-q.correct{background:var(--bamboo);border-color:var(--bamboo);color:#fff;}
+.opt-dot-q.wrong{background:var(--blossom);border-color:var(--blossom);color:#fff;}
+.quiz-explain{background:rgba(255,255,255,.6);border:1px solid var(--mist);border-radius:12px;padding:13px 16px;margin-bottom:14px;}
+.quiz-explain p{font-size:13px;color:#4a4a5a;line-height:1.65;}
+.btn-next{width:100%;background:linear-gradient(135deg,var(--bamboo),var(--moss));color:var(--paper);border:none;border-radius:100px;padding:15px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;box-shadow:0 4px 16px rgba(61,94,46,.2);transition:transform .2s,box-shadow .2s;}
+.btn-next:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(61,94,46,.25);}
+.quiz-result{background:rgba(255,255,255,.72);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.85);border-radius:22px;padding:44px 28px;text-align:center;box-shadow:0 4px 28px var(--shadow);}
+.quiz-result h2{font-family:'Zen Old Mincho',serif;font-size:2rem;color:var(--ink);margin:14px 0 10px;}
+.quiz-result p{font-size:14px;color:#4a4a5a;line-height:1.75;margin-bottom:24px;}
+.btn-reset{background:linear-gradient(135deg,var(--bamboo),var(--moss));color:var(--paper);border:none;border-radius:100px;padding:12px 32px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;}
+
+/* ── COACH IA ── */
+.coach-tab-btn{background:linear-gradient(135deg,rgba(92,122,74,.15),rgba(212,96,122,.1)) !important;color:var(--bamboo) !important;border:1px solid rgba(92,122,74,.25) !important;}
+.coach-tab-btn.active{background:linear-gradient(135deg,var(--bamboo),var(--moss)) !important;color:var(--paper) !important;border:none !important;}
+
+.coach-wrap{display:flex;flex-direction:column;gap:0;}
+.coach-hero{background:var(--ink);border-radius:20px;padding:26px 24px 20px;margin-bottom:20px;text-align:center;position:relative;overflow:hidden;}
+.coach-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--bamboo),var(--blossom));}
+.coach-hero::after{content:'🌿';position:absolute;bottom:-8px;right:16px;font-size:72px;opacity:.07;}
+.coach-hero h2{font-family:'Zen Old Mincho',serif;font-size:1.5rem;color:var(--paper);margin:8px 0 6px;font-weight:400;}
+.coach-hero p{font-size:13px;color:rgba(253,248,240,.45);line-height:1.65;}
+.coach-avatar-big{font-size:2.4rem;margin-bottom:4px;}
+
+.coach-info{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:20px;}
+.ci-chip{background:rgba(255,255,255,.65);border:1px solid var(--mist);border-radius:14px;padding:12px 10px;text-align:center;}
+.ci-icon{font-size:1.3rem;margin-bottom:5px;}
+.ci-label{font-size:11px;font-weight:700;color:var(--bamboo);text-transform:uppercase;letter-spacing:1px;}
+.ci-val{font-size:12px;color:#4a4a5a;margin-top:2px;line-height:1.4;}
+
+.coach-chat{background:rgba(255,255,255,.65);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.85);border-radius:22px;box-shadow:0 4px 28px var(--shadow);overflow:hidden;}
+.coach-feed{padding:20px 18px;min-height:320px;max-height:480px;overflow-y:auto;display:flex;flex-direction:column;gap:16px;}
+.coach-feed::-webkit-scrollbar{width:4px;}
+.coach-feed::-webkit-scrollbar-track{background:transparent;}
+.coach-feed::-webkit-scrollbar-thumb{background:var(--mist);border-radius:4px;}
+
+.coach-msg{display:flex;gap:10px;align-items:flex-end;}
+.coach-msg.user{flex-direction:row-reverse;}
+.coach-avatar{font-size:1.4rem;flex-shrink:0;width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:rgba(92,122,74,.1);border-radius:50%;border:1.5px solid var(--mist);}
+.coach-bubble{max-width:82%;padding:13px 16px;border-radius:18px;font-size:14px;line-height:1.7;font-family:'Nunito',sans-serif;}
+.coach-msg.assistant .coach-bubble{background:rgba(253,248,240,.9);border:1px solid var(--mist);border-radius:18px 18px 18px 4px;color:var(--ink);}
+.coach-msg.user .coach-bubble{background:linear-gradient(135deg,var(--bamboo),var(--moss));color:var(--paper);border-radius:18px 18px 4px 18px;}
+
+.typing span{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--bamboo);margin:0 2px;animation:bounce .9s infinite;}
+.typing span:nth-child(2){animation-delay:.15s;}
+.typing span:nth-child(3){animation-delay:.3s;}
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-8px)}}
+
+.coach-starters{padding:0 18px 14px;display:flex;flex-wrap:wrap;gap:8px;}
+.starter-btn{background:rgba(92,122,74,.08);border:1.5px solid var(--mist);border-radius:100px;padding:8px 16px;font-size:12.5px;font-weight:700;color:var(--bamboo);font-family:'Nunito',sans-serif;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.starter-btn:hover{background:var(--bamboo);color:var(--paper);border-color:var(--bamboo);}
+
+.coach-input-row{border-top:1px solid var(--mist);padding:14px 16px;display:flex;gap:10px;align-items:flex-end;background:rgba(255,255,255,.5);}
+.coach-input-row textarea{flex:1;border:1.5px solid var(--mist);border-radius:14px;padding:11px 14px;font-family:'Nunito',sans-serif;font-size:14px;color:var(--ink);background:rgba(253,248,240,.85);outline:none;resize:none;line-height:1.5;transition:border-color .2s;max-height:100px;}
+.coach-input-row textarea:focus{border-color:var(--bamboo);background:#fff;}
+.coach-input-row textarea::placeholder{color:#bbb;}
+.btn-coach-send{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--bamboo),var(--moss));border:none;color:var(--paper);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .2s,box-shadow .2s;box-shadow:0 3px 10px rgba(61,94,46,.25);}
+.btn-coach-send:hover{transform:scale(1.08);box-shadow:0 5px 16px rgba(61,94,46,.3);}
+
+.coach-tips{margin-top:16px;background:rgba(201,137,74,.06);border:1px solid rgba(201,137,74,.18);border-radius:16px;padding:16px 18px;}
+.coach-tips-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin-bottom:10px;}
+.coach-tip-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;font-size:13px;color:#4a4a5a;line-height:1.6;}
+.coach-tip-row:last-child{margin-bottom:0;}
+.coach-tip-icon{flex-shrink:0;font-size:14px;}
+
+/* ── FOOTER ── */
+.footer{background:var(--ink);margin-top:60px;padding:22px 24px;text-align:center;}
+.footer p{font-size:12px;color:rgba(253,248,240,.25);letter-spacing:.08em;font-family:'Nunito',sans-serif;}
+</style>
+</head>
+<body>
+
+<svg class="petal p1" viewBox="0 0 12 16"><ellipse cx="6" cy="8" rx="5" ry="7" fill="#d4607a" opacity=".7"/></svg>
+<svg class="petal p2" viewBox="0 0 9 12"><ellipse cx="4.5" cy="6" rx="4" ry="5.5" fill="#f0b8c6" opacity=".6"/></svg>
+<svg class="petal p3" viewBox="0 0 14 18"><ellipse cx="7" cy="9" rx="6" ry="8" fill="#d4607a" opacity=".5"/></svg>
+<svg class="petal p4" viewBox="0 0 10 13"><ellipse cx="5" cy="6.5" rx="4.5" ry="6" fill="#f0b8c6" opacity=".65"/></svg>
+<svg class="petal p5" viewBox="0 0 11 15"><ellipse cx="5.5" cy="7.5" rx="5" ry="7" fill="#d4607a" opacity=".55"/></svg>
+<svg class="petal p6" viewBox="0 0 8 11"><ellipse cx="4" cy="5.5" rx="3.5" ry="5" fill="#f0b8c6" opacity=".5"/></svg>
+
+<svg class="bg-art bg-left" viewBox="0 0 200 400" fill="none">
+  <line x1="100" y1="0" x2="100" y2="400" stroke="#5c7a4a" stroke-width="1.5"/>
+  <ellipse cx="100" cy="70" rx="18" ry="28" fill="#d4607a" opacity=".4"/>
+  <ellipse cx="80" cy="120" rx="14" ry="22" fill="#f0b8c6" opacity=".5"/>
+  <ellipse cx="118" cy="165" rx="16" ry="25" fill="#d4607a" opacity=".35"/>
+  <ellipse cx="88" cy="215" rx="12" ry="20" fill="#f0b8c6" opacity=".45"/>
+  <line x1="100" y1="70" x2="80" y2="120" stroke="#5c7a4a" stroke-width="1"/>
+  <line x1="100" y1="120" x2="118" y2="165" stroke="#5c7a4a" stroke-width="1"/>
+  <line x1="100" y1="165" x2="88" y2="215" stroke="#5c7a4a" stroke-width="1"/>
+</svg>
+<svg class="bg-art bg-right" viewBox="0 0 180 300" fill="none">
+  <line x1="90" y1="0" x2="90" y2="300" stroke="#5c7a4a" stroke-width="1.2"/>
+  <ellipse cx="90" cy="55" rx="14" ry="22" fill="#c9894a" opacity=".3"/>
+  <ellipse cx="110" cy="105" rx="12" ry="18" fill="#d4607a" opacity=".3"/>
+  <ellipse cx="72" cy="150" rx="13" ry="20" fill="#f0b8c6" opacity=".35"/>
+</svg>
+
+<div class="container">
+
+  <div class="topbar">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+        <circle cx="32" cy="32" r="30" stroke="#d4607a" stroke-width="1.5" opacity=".4"/>
+        <circle cx="32" cy="32" r="22" stroke="#d4607a" stroke-width="1" opacity=".25"/>
+        <circle cx="32" cy="32" r="12" stroke="#d4607a" stroke-width=".8" opacity=".2"/>
+        <text x="32" y="40" text-anchor="middle" font-size="20" fill="#d4607a" opacity=".75">🌿</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="header">
+    <p class="tagline">Concours de Haïku · 2026</p>
+    <h1>Guide du parfait <span class="accent">haïjin</span></h1>
+    <p class="header-sub">Tout ce qu'il faut savoir pour écrire un haïku qui capte l'infiniment petit.</p>
+    <div style="display:flex;justify-content:center;gap:32px;margin-top:22px;">
+      <div style="text-align:center;"><div style="font-size:22px;font-weight:700;color:var(--blossom);font-family:'Nunito',sans-serif;">4</div><div style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:.08em;">Thèmes</div></div>
+      <div style="text-align:center;"><div style="font-size:22px;font-weight:700;color:var(--bamboo);font-family:'Nunito',sans-serif;">5</div><div style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:.08em;">Quiz</div></div>
+      <div style="text-align:center;"><div style="font-size:22px;font-weight:700;color:var(--gold);font-family:'Nunito',sans-serif;">17</div><div style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:.08em;">Syllabes</div></div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-wrap">
+    <button class="tab-btn active" onclick="switchTab('guide',this)">📖 Guide</button>
+    <button class="tab-btn" onclick="switchTab('themes',this)">🎨 Thèmes</button>
+    <button class="tab-btn" onclick="switchTab('atelier',this)">✏️ Atelier</button>
+    <button class="tab-btn" onclick="switchTab('quiz',this)">🎯 Quiz</button>
+    <button class="tab-btn coach-tab-btn" onclick="switchTab('coach',this)">🌿 Coach IA</button>
+  </div>
+
+  <!-- ════ GUIDE ════ -->
+  <div id="tab-guide" class="tab-panel active">
+
+    <div class="section-hd"><div class="sec-badge">🌸</div><h2 class="sec-title">Qu'est-ce qu'un haïku ?</h2></div>
+    <div class="card">
+      <p style="font-size:14.5px;line-height:1.85;color:#4a4a5a;">Né au Japon, popularisé par le poète <strong style="color:var(--bamboo)">Bashō Matsuo (1644–1694)</strong>, le haïku capture un instant fugace en trois lignes. Celui qui l'écrit porte un beau nom : un <em>haïjin</em>.</p>
+      <div class="inner-sep">✦</div>
+      <p style="font-size:14.5px;line-height:1.85;color:#4a4a5a;">Ce n'est pas un exercice scolaire — c'est un <strong style="color:var(--blossom)">appareil photo intérieur</strong> qui capture le « clac » de l'instant. En éliminant le superflu, on apprend à trouver le mot juste.</p>
+    </div>
+
+    <div class="branch-div"><span class="branch-div-icon">🌿</span></div>
+
+    <div class="section-hd"><div class="sec-badge blossom">5</div><h2 class="sec-title">La structure 5-7-5</h2></div>
+    <div class="struct-grid">
+      <div class="struct-cell light"><div class="struct-n">5</div><div class="struct-label">Ligne 1</div><div class="struct-desc">L'image d'ouverture</div></div>
+      <div class="struct-cell dark"><div class="struct-n">7</div><div class="struct-label" style="color:rgba(253,248,240,.85);">Ligne 2</div><div class="struct-desc" style="color:rgba(253,248,240,.4);">Le développement</div></div>
+      <div class="struct-cell light"><div class="struct-n">5</div><div class="struct-label">Ligne 3</div><div class="struct-desc">La chute / révélation</div></div>
+    </div>
+    <div class="haiku-card">
+      <div class="haiku-inner">
+        <div class="haiku-line-row"><span class="haiku-line">Une fourmi passe —</span><span class="syl-badge">5 syl.</span></div>
+        <div class="haiku-line-row"><span class="haiku-line">sous le ciel immense et bleu</span><span class="syl-badge">7 syl.</span></div>
+        <div class="haiku-line-row"><span class="haiku-line">elle porte sa vie.</span><span class="syl-badge">5 syl.</span></div>
+        <div class="haiku-author">— Traditionnel</div>
+      </div>
+    </div>
+
+    <div class="branch-div"><span class="branch-div-icon">🌸</span></div>
+
+    <div class="section-hd"><div class="sec-badge">✨</div><h2 class="sec-title">Les 3 ingrédients secrets</h2></div>
+    <div class="ingredient"><div class="ing-icon">🖼️</div><div><div class="ing-title">L'image concrète</div><div class="ing-desc">Pas d'abstractions. Montre quelque chose de visible, d'audible, de tangible. « Une feuille tombe » plutôt que « la tristesse ».</div></div></div>
+    <div class="ingredient blossom"><div class="ing-icon">🍂</div><div><div class="ing-title">Le kigo (mot de saison)</div><div class="ing-desc">Un mot ancrant l'instant dans le temps : pluie, neige, cigale, fleur de cerisier, chaleur… C'est l'âme du haïku.</div></div></div>
+    <div class="ingredient gold"><div class="ing-icon">⚡</div><div><div class="ing-title">La coupure (kireji)</div><div class="ing-desc">Un silence, une rupture entre deux images. Souvent marqué par un tiret « — ». Crée la tension et la surprise.</div></div></div>
+
+    <div class="branch-div"><span class="branch-div-icon">🌿</span></div>
+
+    <div class="section-hd"><div class="sec-badge gold">💡</div><h2 class="sec-title">Conseils de pro</h2></div>
+    <div class="card">
+      <div class="tip-item"><span class="tip-n">1.</span><span class="tip-txt">Utilise des verbes d'action précis. « Frémit » plutôt que « bouge ».</span></div>
+      <div class="tip-item"><span class="tip-n">2.</span><span class="tip-txt">Évite les adjectifs vagues : « grand », « beau », « petit ». Préfère des images concrètes.</span></div>
+      <div class="tip-item"><span class="tip-n">3.</span><span class="tip-txt">Ne rime pas — ce n'est pas obligatoire et ça peut forcer des mots mal choisis.</span></div>
+      <div class="tip-item"><span class="tip-n">4.</span><span class="tip-txt">Écris au présent : le haïku capture un instant, pas un souvenir.</span></div>
+      <div class="tip-item"><span class="tip-n">5.</span><span class="tip-txt">Relis à voix haute. Si ça sonne juste, c'est juste.</span></div>
+      <div class="tip-item"><span class="tip-n">6.</span><span class="tip-txt">Laisse le lecteur imaginer la suite. Un bon haïku ouvre une porte.</span></div>
+    </div>
+
+    <div class="branch-div"><span class="branch-div-icon">🌸</span></div>
+
+    <div class="section-hd"><div class="sec-badge blossom">🚫</div><h2 class="sec-title">Les erreurs classiques</h2></div>
+    <div class="err-row"><div class="err-bad">✗ Le soleil est beau et chaud</div><div class="err-good">✓ Le soleil cuit — la pierre garde la chaleur du midi</div></div>
+    <div class="err-row"><div class="err-bad">✗ Je suis triste ce matin</div><div class="err-good">✓ Tasse vide — le thé refroidit sans personne</div></div>
+    <div class="err-row"><div class="err-bad">✗ La nature est magnifique</div><div class="err-good">✓ Fourmis en file — elles portent un pétale rose vers l'inconnu</div></div>
+
+  </div>
+
+  <!-- ════ THÈMES ════ -->
+  <div id="tab-themes" class="tab-panel">
+
+    <div class="theme-grid">
+      <button class="theme-btn active-bamboo" onclick="switchTheme(0,this,'bamboo')" id="tbtn0"><div class="theme-btn-emoji">🔬</div><div class="theme-btn-title">Le monde à la loupe</div></button>
+      <button class="theme-btn" onclick="switchTheme(1,this,'blossom')" id="tbtn1"><div class="theme-btn-emoji">✏️</div><div class="theme-btn-title">La vie secrète des choses</div></button>
+      <button class="theme-btn" onclick="switchTheme(2,this,'bamboo')" id="tbtn2"><div class="theme-btn-emoji">💧</div><div class="theme-btn-title">Les royaumes cachés</div></button>
+      <button class="theme-btn" onclick="switchTheme(3,this,'blossom')" id="tbtn3"><div class="theme-btn-emoji">👟</div><div class="theme-btn-title">Au ras du sol</div></button>
+    </div>
+
+    <div class="theme-panel active" id="theme0">
+      <div class="theme-hero" style="background:rgba(92,122,74,.07);border:1.5px solid var(--mist);">
+        <div style="font-size:2rem;margin-bottom:8px;">🔬</div>
+        <h2 style="color:var(--bamboo);">Le monde à la loupe</h2>
+        <p>Transformer un détail banal en spectacle fascinant.</p>
+      </div>
+      <div class="section-hd"><div class="sec-badge">📝</div><h3 class="sec-title" style="font-size:1.1rem;">Exemples</h3></div>
+      <div class="haiku-card"><div class="haiku-inner"><div class="haiku-line">Une fourmi passe —</div><div class="haiku-line">sous le ciel immense et bleu</div><div class="haiku-line">elle porte sa vie.</div><div class="haiku-author">— Traditionnel</div></div></div>
+      <div class="haiku-card"><div class="haiku-inner"><div class="haiku-line">Fissure du mur —</div><div class="haiku-line">un univers s'y loge</div><div class="haiku-line">avant la pluie.</div><div class="haiku-author">— Exemple</div></div></div>
+      <div class="branch-div"><span class="branch-div-icon">🌿</span></div>
+      <div class="section-hd"><div class="sec-badge">🎯</div><h3 class="sec-title" style="font-size:1.1rem;">Exercices d'inspiration</h3></div>
+      <div class="exo-item"><div class="exo-num" style="background:var(--bamboo);">1</div><div class="exo-txt">Pose-toi devant ton bureau. Choisis le plus petit objet que tu vois. Décris-le comme s'il était un continent.</div></div>
+      <div class="exo-item"><div class="exo-num" style="background:var(--bamboo);">2</div><div class="exo-txt">Regarde tes mains pendant 30 secondes. Qu'est-ce que tu remarques que tu n'avais jamais vu ?</div></div>
+      <div class="exo-item"><div class="exo-num" style="background:var(--bamboo);">3</div><div class="exo-txt">Photographie mentalement une fissure, une tache ou une poussière. Qu'est-ce qu'elle cache ?</div></div>
+      <div class="tip-strip" style="background:rgba(92,122,74,.07);border-color:var(--bamboo);margin-top:14px;"><p>💡 <strong>Tip :</strong> Utilise des verbes d'action précis. « Frémit » plutôt que « bouge ».</p></div>
+    </div>
+
+    <div class="theme-panel" id="theme1">
+      <div class="theme-hero" style="background:rgba(212,96,122,.06);border:1.5px solid var(--petal);">
+        <div style="font-size:2rem;margin-bottom:8px;">✏️</div>
+        <h2 style="color:var(--blossom);">La vie secrète des choses</h2>
+        <p>Imaginer ce que font les objets quand nous avons le dos tourné.</p>
+      </div>
+      <div class="section-hd"><div class="sec-badge blossom">📝</div><h3 class="sec-title" style="font-size:1.1rem;">Exemples</h3></div>
+      <div class="haiku-card" style="border-color:var(--petal);"><div class="haiku-inner"><div class="haiku-line">Le crayon seul —</div><div class="haiku-line">attend que revienne la main</div><div class="haiku-line">dans le silence.</div><div class="haiku-author">— Exemple</div></div></div>
+      <div class="haiku-card" style="border-color:var(--petal);"><div class="haiku-inner"><div class="haiku-line">La chaise vide</div><div class="haiku-line">rêve encore de l'été</div><div class="haiku-line">quand on riait.</div><div class="haiku-author">— Exemple</div></div></div>
+      <div class="branch-div"><span class="branch-div-icon">🌸</span></div>
+      <div class="section-hd"><div class="sec-badge blossom">🎯</div><h3 class="sec-title" style="font-size:1.1rem;">Exercices d'inspiration</h3></div>
+      <div class="exo-item"><div class="exo-num" style="background:var(--blossom);">1</div><div class="exo-txt">Choisis un objet de ta chambre. Écris ce qu'il pense quand tu dors.</div></div>
+      <div class="exo-item"><div class="exo-num" style="background:var(--blossom);">2</div><div class="exo-txt">Imagine que ton téléphone est jaloux de ton livre. Comment le dit-il en 3 lignes ?</div></div>
+      <div class="exo-item"><div class="exo-num" style="background:var(--blossom);">3</div><div class="exo-txt">Un stylo usé jusqu'à la corde. Quelle est sa dernière pensée ?</div></div>
+      <div class="tip-strip" style="background:rgba(212,96,122,.06);border-color:var(--blossom);margin-top:14px;"><p>💡 <strong>Tip :</strong> Donne à l'objet une seule émotion, pas plusieurs. La simplicité crée la magie.</p></div>
+    </div>
+
+    <div class="theme-panel" id="theme2">
+      <div class="theme-hero" style="background:rgba(123,167,188,.08);border:1.5px solid rgba(123,167,188,.3);">
+        <div style="font-size:2rem;margin-bottom:8px;">💧</div>
+        <h2 style="color:var(--sky);">Les royaumes cachés</h2>
+        <p>Faire surgir un paysage entier dans une fissure de mur ou une goutte d'eau.</p>
+      </div>
+      <div class="section-hd"><div class="sec-badge" style="border-color:var(--sky);color:var(--sky);">📝</div><h3 class="sec-title" style="font-size:1.1rem;">Exemples</h3></div>
+      <div class="haiku-card" style="border-color:rgba(123,167,188,.3);"><div class="haiku-inner"><div class="haiku-line">Goutte de pluie —</div><div class="haiku-line">un lac entier se reflète</div><div class="haiku-line">dans sa rondeur.</div><div class="haiku-author">— Exemple</div></div></div>
+      <div class="haiku-card" style="border-color:rgba(123,167,188,.3);"><div class="haiku-inner"><div class="haiku-line">Mousse du trottoir —</div><div class="haiku-line">forêt verte pour la fourmi</div><div class="haiku-line">après l'orage.</div><div class="haiku-author">— Exemple</div></div></div>
+      <div class="branch-div"><span class="branch-div-icon">💧</span></div>
+      <div class="section-hd"><div class="sec-badge" style="border-color:var(--sky);color:var(--sky);">🎯</div><h3 class="sec-title" style="font-size:1.1rem;">Exercices d'inspiration</h3></div>
+      <div class="exo-item"><div class="exo-num" style="background:var(--sky);">1</div><div class="exo-txt">Regarde une flaque d'eau après la pluie. Qu'est-ce qu'un insecte y verrait ?</div></div>
+      <div class="exo-item"><div class="exo-num" style="background:var(--sky);">2</div><div class="exo-txt">Une fissure dans un mur devient le canyon du Colorado. Décris-la.</div></div>
+      <div class="exo-item"><div class="exo-num" style="background:var(--sky);">3</div><div class="exo-txt">Une bulle de savon contient un ciel entier. Capture cet instant avant qu'elle éclate.</div></div>
+      <div class="tip-strip" style="background:rgba(123,167,188,.07);border-color:var(--sky);margin-top:14px;"><p>💡 <strong>Tip :</strong> Joue sur les contrastes de taille : l'immense dans l'infiniment petit.</p></div>
+    </div>
+
+    <div class="theme-panel" id="theme3">
+      <div class="theme-hero" style="background:rgba(201,137,74,.07);border:1.5px solid rgba(201,137,74,.2);">
+        <div style="font-size:2rem;margin-bottom:8px;">👟</div>
+        <h2 style="color:var(--gold);">Au ras du sol</h2>
+        <p>Raconter le monde à hauteur de fourmi.</p>
+      </div>
+      <div class="section-hd"><div class="sec-badge gold">📝</div><h3 class="sec-title" style="font-size:1.1rem;">Exemples</h3></div>
+      <div class="haiku-card" style="border-color:rgba(201,137,74,.2);"><div class="haiku-inner"><div class="haiku-line">Brin d'herbe géant —</div><div class="haiku-line">la chenille s'y accroche</div><div class="haiku-line">vent de septembre.</div><div class="haiku-author">— Exemple</div></div></div>
+      <div class="haiku-card" style="border-color:rgba(201,137,74,.2);"><div class="haiku-inner"><div class="haiku-line">Sous la semelle —</div><div class="haiku-line">le monde tremble, puis reprend</div><div class="haiku-line">son chemin de terre.</div><div class="haiku-author">— Exemple</div></div></div>
+      <div class="branch-div"><span class="branch-div-icon">🌿</span></div>
+      <div class="section-hd"><div class="sec-badge gold">🎯</div><h3 class="sec-title" style="font-size:1.1rem;">Exercices d'inspiration</h3></div>
+      <div class="exo-item"><div class="exo-num" style="background:var(--gold);">1</div><div class="exo-txt">Allonge-toi par terre (ou imagine-le). Qu'est-ce que tu vois que tu ne vois jamais ?</div></div>
+      <div class="exo-item"><div class="exo-num" style="background:var(--gold);">2</div><div class="exo-txt">Tu es une fourmi qui traverse une cuisine. Décris le voyage.</div></div>
+      <div class="exo-item"><div class="exo-num" style="background:var(--gold);">3</div><div class="exo-txt">Le sol après la pluie : quelles odeurs, quels paysages pour celui qui y vit ?</div></div>
+      <div class="tip-strip" style="background:rgba(201,137,74,.07);border-color:var(--gold);margin-top:14px;"><p>💡 <strong>Tip :</strong> Ancre ton haïku dans un détail sensoriel concret : odeur, texture, son.</p></div>
+    </div>
+
+  </div>
+
+  <!-- ════ ATELIER ════ -->
+  <div id="tab-atelier" class="tab-panel">
+
+    <div class="atelier-hero">
+      <div style="font-size:2.2rem;margin-bottom:6px;">✍️</div>
+      <h2>Atelier d'écriture</h2>
+      <p>Écris ton haïku ci-dessous. Le compteur de syllabes t'aide en temps réel !</p>
+    </div>
+
+    <div class="section-hd"><div class="sec-badge">💭</div><h2 class="sec-title">Inspiration du moment</h2></div>
+    <div class="inspi-item"><span>💭</span> Observe quelque chose autour de toi qui mesure moins d'1 cm.</div>
+    <div class="inspi-item"><span>💭</span> Pense à la dernière fois que tu t'es arrêté pour regarder quelque chose de petit.</div>
+    <div class="inspi-item"><span>💭</span> Ferme les yeux 10 secondes. Quel son entends-tu ? Quel objet le produit ?</div>
+
+    <div class="branch-div"><span class="branch-div-icon">🌸</span></div>
+
+    <div class="section-hd"><div class="sec-badge blossom">✏️</div><h2 class="sec-title">Ton haïku</h2></div>
+    <p style="font-size:13px;color:#888;margin-bottom:12px;line-height:1.55;">Écris une ligne par retour à la ligne. Le compteur s'adapte automatiquement.</p>
+    <textarea class="haiku-ta" id="draftTA" rows="5" placeholder="Ligne 1 (5 syllabes)...&#10;Ligne 2 (7 syllabes)...&#10;Ligne 3 (5 syllabes)..." oninput="updateDraft()"></textarea>
+    <div id="sylBox" style="display:none;" class="syl-box">
+      <div id="sylRows"></div>
+      <div class="syl-total" id="sylTotal"></div>
+    </div>
+    <div id="previewBox" style="display:none;" class="preview-box">
+      <div class="preview-label">Aperçu</div>
+      <div class="preview-lines" id="previewLines"></div>
+      <div class="preview-credit" id="previewCredit">— vous, 2026</div>
+    </div>
+
+    <div class="branch-div"><span class="branch-div-icon">🌿</span></div>
+
+    <div class="section-hd"><div class="sec-badge">📌</div><h2 class="sec-title">Mémo rapide</h2></div>
+    <div class="memo-grid">
+      <div class="memo-item"><div class="memo-key">Structure</div><div class="memo-val">5 — 7 — 5 syllabes</div></div>
+      <div class="memo-item"><div class="memo-key">Kigo</div><div class="memo-val">Un mot de saison</div></div>
+      <div class="memo-item"><div class="memo-key">Coupure</div><div class="memo-val">Un tiret ou silence</div></div>
+      <div class="memo-item"><div class="memo-key">Temps</div><div class="memo-val">Présent de l'instant</div></div>
+      <div class="memo-item"><div class="memo-key">Rime</div><div class="memo-val">Pas obligatoire</div></div>
+      <div class="memo-item"><div class="memo-key">Haïjin</div><div class="memo-val">C'est toi !</div></div>
+    </div>
+
+  </div>
+
+  <!-- ════ QUIZ ════ -->
+  <div id="tab-quiz" class="tab-panel">
+
+    <div class="quiz-hero">
+      <div style="font-size:2.2rem;margin-bottom:6px;">🎯</div>
+      <h2>Quiz du haïjin</h2>
+      <p>5 questions pour tester tes connaissances</p>
+    </div>
+
+    <div id="quizMain">
+      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:10px;">
+        <span style="color:#888;">Question <span id="qNum">1</span> / 5</span>
+        <span style="color:var(--bamboo);font-weight:700;">Score : <span id="qScore">0</span></span>
+      </div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qProgress" style="width:0%"></div></div>
+      <div class="quiz-q-card"><p class="quiz-q" id="qText"></p></div>
+      <div id="qOptions"></div>
+      <div id="qExplain" style="display:none;" class="quiz-explain"><p id="qExplainText"></p></div>
+      <button class="btn-next" id="qNextBtn" style="display:none;" onclick="nextQuestion()">Question suivante →</button>
+    </div>
+
+    <div id="quizResult" style="display:none;">
+      <div class="quiz-result">
+        <div style="font-size:52px;margin-bottom:8px;" id="resIcon">🏆</div>
+        <h2 id="resScore"></h2>
+        <p id="resMsg"></p>
+        <button class="btn-reset" onclick="resetQuiz()">Recommencer le quiz</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ════ COACH IA ════ -->
+  <div id="tab-coach" class="tab-panel">
+    <div class="coach-wrap">
+
+      <div class="coach-hero">
+        <div class="coach-avatar-big">🌿</div>
+        <h2>Hana, ton coach poétique</h2>
+        <p>Je t'accompagne étape par étape pour créer ton haïku et ton œuvre.<br>Dis-moi juste par quel thème tu veux commencer !</p>
+      </div>
+
+      <div class="coach-info">
+        <div class="ci-chip"><div class="ci-icon">🎯</div><div class="ci-label">Objectif</div><div class="ci-val">Créer ton haïku 5-7-5</div></div>
+        <div class="ci-chip"><div class="ci-icon">🤫</div><div class="ci-label">Secret</div><div class="ci-val">Glisser un kigo dedans</div></div>
+        <div class="ci-chip"><div class="ci-icon">🎨</div><div class="ci-label">Bonus</div><div class="ci-val">Créer ton œuvre visuelle</div></div>
+      </div>
+
+      <div class="coach-chat">
+        <div class="coach-feed" id="coachFeed">
+          <!-- Messages apparaissent ici -->
+        </div>
+
+        <div class="coach-starters" id="coachStarters">
+          <span style="font-size:12px;color:#aaa;font-family:'Nunito',sans-serif;width:100%;margin-bottom:4px;">Choisis ton thème pour commencer :</span>
+          <button class="starter-btn" onclick="startWithTheme('Je veux travailler sur le thème 🔬 Le monde à la loupe !')">🔬 Le monde à la loupe</button>
+          <button class="starter-btn" onclick="startWithTheme('Je veux travailler sur ✏️ La vie secrète des choses !')">✏️ La vie secrète des choses</button>
+          <button class="starter-btn" onclick="startWithTheme('Je choisis 💧 Les royaumes cachés !')">💧 Les royaumes cachés</button>
+          <button class="starter-btn" onclick="startWithTheme('Je veux explorer 👟 Au ras du sol !')">👟 Au ras du sol</button>
+        </div>
+
+        <div class="coach-input-row">
+          <textarea id="coachInput" rows="1" placeholder="Écris ta question ou ton haïku ici…" onkeydown="handleCoachKey(event)" oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea>
+          <button class="btn-coach-send" onclick="sendCoachInput()" title="Envoyer">➤</button>
+        </div>
+      </div>
+
+      <div class="coach-tips">
+        <div class="coach-tips-title">💡 Comment utiliser Hana</div>
+        <div class="coach-tip-row"><span class="coach-tip-icon">1️⃣</span>Choisis ton thème en cliquant sur un bouton ci-dessus</div>
+        <div class="coach-tip-row"><span class="coach-tip-icon">2️⃣</span>Réponds aux questions de Hana — elle te guide pas à pas</div>
+        <div class="coach-tip-row"><span class="coach-tip-icon">3️⃣</span>Partage ton haïku avec elle pour qu'elle t'aide à le perfectionner</div>
+        <div class="coach-tip-row"><span class="coach-tip-icon">4️⃣</span>Demande-lui des idées pour ton œuvre (photo, dessin, objet…)</div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<div class="footer">
+  <p>✦ Le Monde à la Loupe · Concours de Haïku · Skoolup · 2026</p>
+</div>
+
+<script>
+// ── TABS ──
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (id === 'coach') initCoach();
+}
+ 
+// ── THÈMES ──
+function switchTheme(n, btn, color) {
+  document.querySelectorAll('.theme-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.theme-btn').forEach(b => { b.classList.remove('active-bamboo', 'active-blossom'); });
+  document.getElementById('theme' + n).classList.add('active');
+  btn.classList.add('active-' + color);
+}
+ 
+// ── COMPTEUR DE SYLLABES ──
+function countSyl(text) {
+  return (text.toLowerCase().replace(/[^a-zàâäéèêëîïôùûüœæç]/g, '').match(/[aeiouyàâäéèêëîïôùûüœæç]+/g) || []).length;
+}
+function updateDraft() {
+  const raw = document.getElementById('draftTA').value;
+  const sylBox = document.getElementById('sylBox');
+  const previewBox = document.getElementById('previewBox');
+  if (!raw.trim()) { sylBox.style.display = 'none'; previewBox.style.display = 'none'; return; }
+  const lines = raw.split('\n');
+  const targets = [5, 7, 5];
+  const counts = lines.slice(0, 3).map((l, i) => ({ l, c: countSyl(l), t: targets[i] || '—' }));
+  const total = counts.reduce((s, c) => s + c.c, 0);
+  const valid = lines.length === 3 && counts.every((c, i) => c.c === targets[i]);
+  sylBox.style.display = 'block';
+  document.getElementById('sylRows').innerHTML = counts.map(c => `
+    <div class="syl-row-item">
+      <span class="syl-italic">${c.l || '…'}</span>
+      <span class="${c.c === c.t ? 'syl-ok' : 'syl-ko'}">${c.c} / ${c.t}</span>
+    </div>`).join('');
+  document.getElementById('sylTotal').innerHTML = valid
+    ? '<span style="color:var(--bamboo);">✓ Haïku valide — 17 syllabes en 5-7-5 !</span>'
+    : `<span style="color:#aaa;">Total : ${total} syllabes (objectif : 17)</span>`;
+  previewBox.style.display = 'block';
+  document.getElementById('previewLines').innerHTML = lines.map(l => `<p>${l || ' '}</p>`).join('');
+}
+ 
+// ── QUIZ ──
+const QUESTIONS = [
+  { q: "Combien de syllabes a un haïku au total ?", opts: ["12","17","14","21"], ans: 1, exp: "5 + 7 + 5 = 17 syllabes réparties sur 3 lignes." },
+  { q: "Comment s'appelle le mot lié à une saison dans un haïku ?", opts: ["Kado","Kigo","Kana","Bashō"], ans: 1, exp: "Le « kigo » ancre l'instant dans le temps et la nature." },
+  { q: "Qui a popularisé le haïku au XVIIe siècle ?", opts: ["Hiroshige","Hokusai","Bashō Matsuo","Sei Shōnagon"], ans: 2, exp: "Bashō Matsuo (1644–1694) est le maître fondateur du haïku moderne." },
+  { q: "Quelle est la structure correcte du haïku ?", opts: ["7-5-7","5-5-5","5-7-5","7-7-5"], ans: 2, exp: "Première ligne : 5 syllabes. Deuxième : 7. Troisième : 5." },
+  { q: "Le haïku est-il obligatoirement rimé ?", opts: ["Oui, toujours","Non, jamais","Seulement les lignes 1 et 3","Parfois"], ans: 1, exp: "Zéro rime obligatoire ! On privilégie l'image, la sensation, la justesse." },
+];
+let qIdx = 0, qScore = 0, qAnswered = false;
+ 
+function renderQuestion() {
+  const q = QUESTIONS[qIdx];
+  document.getElementById('qNum').textContent = qIdx + 1;
+  document.getElementById('qScore').textContent = qScore;
+  document.getElementById('qProgress').style.width = (qIdx / 5 * 100) + '%';
+  document.getElementById('qText').textContent = q.q;
+  document.getElementById('qExplain').style.display = 'none';
+  document.getElementById('qNextBtn').style.display = 'none';
+  qAnswered = false;
+  document.getElementById('qOptions').innerHTML = q.opts.map((o, i) => `
+    <button class="quiz-option" id="opt${i}" onclick="answerQuiz(${i})">
+      <span class="opt-dot-q" id="ltr${i}">${String.fromCharCode(65 + i)}</span>${o}
+    </button>`).join('');
+}
+ 
+function answerQuiz(i) {
+  if (qAnswered) return;
+  qAnswered = true;
+  const q = QUESTIONS[qIdx];
+  if (i === q.ans) { qScore++; document.getElementById('qScore').textContent = qScore; }
+  q.opts.forEach((_, j) => {
+    const btn = document.getElementById('opt' + j);
+    const dot = document.getElementById('ltr' + j);
+    btn.disabled = true;
+    if (j === q.ans) { btn.classList.add('correct'); dot.classList.add('correct'); dot.textContent = '✓'; }
+    else if (j === i) { btn.classList.add('wrong'); dot.classList.add('wrong'); dot.textContent = '✗'; }
+  });
+  document.getElementById('qExplainText').innerHTML = '💡 <strong>' + q.exp + '</strong>';
+  document.getElementById('qExplain').style.display = 'block';
+  const nb = document.getElementById('qNextBtn');
+  nb.style.display = 'block';
+  nb.textContent = qIdx + 1 >= QUESTIONS.length ? 'Voir mon score →' : 'Question suivante →';
+}
+ 
+function nextQuestion() {
+  qIdx++;
+  if (qIdx >= QUESTIONS.length) { showResult(); return; }
+  renderQuestion();
+}
+ 
+function showResult() {
+  document.getElementById('quizMain').style.display = 'none';
+  document.getElementById('quizResult').style.display = 'block';
+  document.getElementById('resIcon').textContent = qScore >= 4 ? '🏆' : qScore >= 2 ? '🌿' : '📖';
+  document.getElementById('resScore').textContent = qScore + ' / ' + QUESTIONS.length;
+  document.getElementById('resMsg').textContent = qScore === 5
+    ? 'Parfait ! Tu es un vrai haïjin 🎉'
+    : qScore >= 3 ? 'Très bien ! Quelques révisions et tu es prêt.'
+    : 'Continue à lire le guide — tu vas progresser !';
+}
+ 
+function resetQuiz() {
+  qIdx = 0; qScore = 0; qAnswered = false;
+  document.getElementById('quizMain').style.display = 'block';
+  document.getElementById('quizResult').style.display = 'none';
+  renderQuestion();
+}
+ 
+renderQuestion();
+ 
+// ── SCROLL ANIMATIONS ──
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.style.animationPlayState = 'running'; obs.unobserve(e.target); }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.card').forEach(el => {
+  el.style.animationPlayState = 'paused'; obs.observe(el);
+});
+ 
+ 
+// ══════════════════════════════════════════════════════════════
+//  COACH IA — Hana  (via Netlify Function — CORS résolu)
+// ══════════════════════════════════════════════════════════════
+ 
+const COACH_SYSTEM = `Tu es Hana, un coach poétique bienveillant et enthousiaste pour le concours de haïku "Le Monde à la Loupe" destiné aux jeunes de 10 à 17 ans.
+ 
+Ton rôle : accompagner chaque participant à créer son haïku (3 lignes, 5-7-5 syllabes) ET son œuvre artistique (photo, dessin, vidéo, audio, objet physique) en lien avec un des 4 thèmes du concours.
+ 
+Les 4 thèmes :
+- 🔬 Le monde à la loupe : un détail minuscule du quotidien
+- ✏️ La vie secrète des choses : ce que font les objets quand on a le dos tourné
+- 💧 Les royaumes cachés : l'immense dans l'infiniment petit
+- 👟 Au ras du sol : le monde vu à hauteur de fourmi
+ 
+Le kigo : un mot de saison glissé dans le haïku sans nommer la saison.
+ 
+Règles :
+- Parle TOUJOURS en "tu", de façon chaleureuse et simple
+- Adapte ton langage à un enfant/ado de 10-17 ans
+- Guide ÉTAPE PAR ÉTAPE
+- Propose des exemples concrets
+- Quand tu corriges un haïku : dis d'abord ce qui est bien, puis suggère une amélioration
+- N'écris JAMAIS le haïku complet à la place du participant
+- Réponds toujours en français`;
+ 
+let coachMessages = [];
+let coachStarted = false;
+ 
+// ─── SEUL CHANGEMENT : URL pointe vers la Netlify Function ────
+const COACH_API_URL = '/.netlify/functions/coach';
+ 
+async function coachSend(userMsg) {
+  if (!userMsg.trim()) return;
+ 
+  appendCoachMsg('user', userMsg);
+  clearCoachInput();
+  showCoachTyping();
+ 
+  coachMessages.push({ role: 'user', content: userMsg });
+ 
+  try {
+    // ↓ Appel à la Netlify Function (proxy sécurisé)
+    const res = await fetch(COACH_API_URL, {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify({
+        messages: coachMessages,
+        system  : COACH_SYSTEM,
+      }),
+    });
+ 
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+ 
+    const data  = await res.json();
+    const reply = data.content?.[0]?.text
+      || 'Désolée, je n\'ai pas bien compris. Peux-tu reformuler ? 🌿';
+ 
+    coachMessages.push({ role: 'assistant', content: reply });
+    hideCoachTyping();
+    appendCoachMsg('assistant', reply);
+ 
+  } catch (e) {
+    console.error('Erreur coach :', e);
+    hideCoachTyping();
+    appendCoachMsg('assistant', 'Oups ! Une petite erreur technique… Réessaie dans un instant 🌸');
+  }
+}
+ 
+function appendCoachMsg(role, text) {
+  const feed = document.getElementById('coachFeed');
+  const div  = document.createElement('div');
+  div.className = 'coach-msg ' + role;
+ 
+  if (role === 'assistant') {
+    div.innerHTML = `<span class="coach-avatar">🌿</span><div class="coach-bubble">${formatCoachText(text)}</div>`;
+  } else {
+    div.innerHTML = `<div class="coach-bubble">${formatCoachText(text)}</div>`;
+  }
+ 
+  const starters = document.getElementById('coachStarters');
+  if (starters) starters.remove();
+ 
+  feed.appendChild(div);
+  div.scrollIntoView({ behavior: 'smooth', block: 'end' });
+}
+ 
+function formatCoachText(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/\n/g, '<br>');
+}
+ 
+function showCoachTyping() {
+  const feed = document.getElementById('coachFeed');
+  const div  = document.createElement('div');
+  div.className = 'coach-msg assistant';
+  div.id        = 'coachTyping';
+  div.innerHTML = `<span class="coach-avatar">🌿</span><div class="coach-bubble typing"><span></span><span></span><span></span></div>`;
+  feed.appendChild(div);
+  div.scrollIntoView({ behavior: 'smooth', block: 'end' });
+}
+ 
+function hideCoachTyping() {
+  const t = document.getElementById('coachTyping');
+  if (t) t.remove();
+}
+ 
+function clearCoachInput() {
+  const el = document.getElementById('coachInput');
+  el.value = '';
+  el.style.height = 'auto';
+}
+ 
+function handleCoachKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    const val = document.getElementById('coachInput').value.trim();
+    if (val) coachSend(val);
+  }
+}
+ 
+function sendCoachInput() {
+  const val = document.getElementById('coachInput').value.trim();
+  if (val) coachSend(val);
+}
+ 
+function startWithTheme(msg) {
+  coachSend(msg);
+}
+ 
+function initCoach() {
+  if (coachStarted) return;
+  coachStarted = true;
+ 
+  const feed    = document.getElementById('coachFeed');
+  const welcome = document.createElement('div');
+  welcome.className = 'coach-msg assistant';
+  welcome.innerHTML = `<span class="coach-avatar">🌿</span><div class="coach-bubble">Bonjour ! Je suis <strong>Hana</strong>, ton coach poétique pour le concours 🌸<br><br>Je suis là pour t'aider à créer ton haïku et ton œuvre, étape par étape. Pas de panique — on y va ensemble !<br><br>Par quel thème veux-tu commencer ?</div>`;
+  feed.appendChild(welcome);
+ 
+  coachMessages.push({
+    role   : 'assistant',
+    content: "Bonjour ! Je suis Hana, ton coach poétique pour le concours 🌸\n\nJe suis là pour t'aider à créer ton haïku et ton œuvre, étape par étape. Pas de panique — on y va ensemble !\n\nPar quel thème veux-tu commencer ?"
+  });
+}
+</script>
+</body>
+</html>
